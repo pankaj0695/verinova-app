@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,35 @@ import { useNavigation } from "@react-navigation/native";
 export default function LoginScreen() {
   const [pin, setPin] = useState(["", "", "", ""]);
   const navigation = useNavigation();
+
+  // Refs for each PIN input
+  const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+
+  const handleChange = (value, index) => {
+    let newPin = [...pin];
+
+    // Only allow numeric input
+    if (/^[0-9]?$/.test(value)) {
+      newPin[index] = value;
+      setPin(newPin);
+
+      // Move to the next input if a number is entered
+      if (value !== "" && index < 3) {
+        inputRefs[index + 1].current.focus();
+      }
+    }
+  };
+
+  const handleBackspace = (event, index) => {
+    if (event.nativeEvent.key === "Backspace" && index > 0) {
+      let newPin = [...pin];
+      newPin[index] = "";
+      setPin(newPin);
+
+      // Move back to the previous input box
+      inputRefs[index - 1].current.focus();
+    }
+  };
 
   const handleLogin = () => {
     if (pin.join("") === "1234") {
@@ -36,15 +65,13 @@ export default function LoginScreen() {
           {pin.map((digit, index) => (
             <TextInput
               key={index}
+              ref={inputRefs[index]}
               style={styles.pinInput}
               keyboardType="numeric"
               maxLength={1}
               value={digit}
-              onChangeText={(value) => {
-                let newPin = [...pin];
-                newPin[index] = value;
-                setPin(newPin);
-              }}
+              onChangeText={(value) => handleChange(value, index)}
+              onKeyPress={(event) => handleBackspace(event, index)}
               secureTextEntry
             />
           ))}
@@ -69,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f8f8f8",
   },
-  logo: { width: 120, height: 120, marginBottom: 20 },
+  logo: { width: 120, height: 120, marginBottom: 40 },
   loginBox: {
     width: "80%",
     backgroundColor: "white",
