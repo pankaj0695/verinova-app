@@ -8,6 +8,7 @@ import DocumentUploadScreen from "./Screens/DocumentUploadScreen";
 import MpinSetupScreen from "./Screens/MPinSetupScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import HomeScreen from "./Screens/HomeScreen";
+import ServiceBotScreen from './Screens/ServiceBotScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
         <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} />
         <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
+        <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
         {/* <Stack.Screen name="Login" component={LoginScreen} />   */}
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
