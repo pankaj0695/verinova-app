@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,12 @@ import {
   StyleSheet,
   Image,
   Platform,
+  Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../../store/UserContext";
+import { COLORS } from "../../constants/colors";
 
 export default function PersonalDetailsScreen() {
   const navigation = useNavigation();
@@ -17,6 +20,24 @@ export default function PersonalDetailsScreen() {
   const [dob, setDob] = useState(null); // Initially null, so the field is empty
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [address, setAddress] = useState("");
+  const { setUserData } = useContext(UserContext);
+
+  const handleNext = () => {
+    if (name.trim().length == 0) {
+      Alert.alert("Invalid Name", "Enter your name");
+      return;
+    }
+    if (dob == null) {
+      Alert.alert("Invalid DOB", "Enter your date of birth");
+      return;
+    }
+    if (address.trim().length == 0) {
+      Alert.alert("Invalid Address", "Enter your address");
+      return;
+    }
+    setUserData({ name, dob, address });
+    navigation.navigate("DocumentUpload");
+  };
 
   // Called when the date picker value changes
   const onChange = (event, selectedDate) => {
@@ -31,7 +52,7 @@ export default function PersonalDetailsScreen() {
     <View style={styles.container}>
       {/* Vyom Logo */}
       <Image
-        source={require("../assets/images/verinova-logo.png")}
+        source={require("../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 
@@ -72,10 +93,7 @@ export default function PersonalDetailsScreen() {
           onChangeText={setAddress}
         />
 
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={() => navigation.navigate("DocumentUpload")}
-        >
+        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
           <Text style={styles.nextText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -88,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f8f8f8",
+    backgroundColor: COLORS.background,
   },
   logo: {
     width: 120,
@@ -100,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    elevation: 3,
+    elevation: 4,
     alignItems: "center",
   },
   title: {
@@ -130,7 +148,8 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: "#E2261C",
-    padding: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 8,
     width: "100%",
     alignItems: "center",

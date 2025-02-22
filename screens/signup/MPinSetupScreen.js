@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -11,12 +11,15 @@ import {
   Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { COLORS } from "../../constants/colors";
+import { UserContext } from "../../store/UserContext";
 
 export default function MpinSetupScreen() {
   const navigation = useNavigation();
   const [mpin, setMpin] = useState(["", "", "", ""]);
   const [confirmMpin, setConfirmMpin] = useState(["", "", "", ""]);
   const [fingerprint, setFingerprint] = useState(false);
+  const { signup, setUserData } = useContext(UserContext);
   const buttonScale = useRef(new Animated.Value(1)).current;
 
   const mpinRefs = Array.from({ length: 4 }, () => useRef(null));
@@ -47,12 +50,16 @@ export default function MpinSetupScreen() {
   };
 
   const handleConfirmMpinKeyPress = (e, index) => {
-    if (e.nativeEvent.key === "Backspace" && confirmMpin[index] === "" && index > 0) {
+    if (
+      e.nativeEvent.key === "Backspace" &&
+      confirmMpin[index] === "" &&
+      index > 0
+    ) {
       confirmMpinRefs[index - 1].current.focus();
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const mpinStr = mpin.join("");
     const confirmMpinStr = confirmMpin.join("");
 
@@ -64,16 +71,31 @@ export default function MpinSetupScreen() {
       Alert.alert("Error", "MPIN and Confirm MPIN do not match!");
       return;
     }
-    navigation.navigate("Login");
+    setUserData({ mpin: mpinStr, fingerprint });
+    const res = await signup();
+    if (res) {
+      navigation.navigate("Start");
+    } else {
+      Alert.alert("Error", "Failed to create account. Please try again.");
+      navigation.replace("SignupMobile");
+    }
   };
 
   // Button Press Animation
-  const animatePressIn = () => Animated.spring(buttonScale, { toValue: 0.9, useNativeDriver: true }).start();
-  const animatePressOut = () => Animated.spring(buttonScale, { toValue: 1, useNativeDriver: true }).start();
+  const animatePressIn = () =>
+    Animated.spring(buttonScale, {
+      toValue: 0.9,
+      useNativeDriver: true,
+    }).start();
+  const animatePressOut = () =>
+    Animated.spring(buttonScale, { toValue: 1, useNativeDriver: true }).start();
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/images/verinova-logo.png")} style={styles.logo} />
+      <Image
+        source={require("../../assets/images/verinova-logo.png")}
+        style={styles.logo}
+      />
 
       <View style={styles.signupBox}>
         <Text style={styles.title}>Set Your Mobile PIN</Text>
@@ -137,84 +159,82 @@ export default function MpinSetupScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center", 
-    backgroundColor: "#f8f8f8", 
-    paddingHorizontal: 20
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.background,
+    paddingHorizontal: 20,
   },
-  logo: { 
-    width: 140, 
-    height: 140, 
-    marginBottom: 30 
+  logo: {
+    width: 140,
+    height: 140,
+    marginBottom: 30,
   },
-  signupBox: { 
-    width: "90%", 
-    backgroundColor: "white", 
-    padding: 25, 
-    borderRadius: 12, 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 2 }, 
-    shadowOpacity: 0.1, 
-    shadowRadius: 4, 
-    alignItems: "center" 
+  signupBox: {
+    width: "90%",
+    backgroundColor: "white",
+    padding: 25,
+    borderRadius: 12,
+    elevation: 4,
+    alignItems: "center",
   },
-  title: { 
-    fontSize: 22, 
-    fontWeight: "bold", 
-    marginBottom: 15, 
-    color: "#333" 
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15,
+    color: "#333",
   },
-  fieldContainer: { 
-    width: "100%", 
-    marginBottom: 20 
+  fieldContainer: {
+    width: "100%",
+    marginBottom: 20,
   },
-  label: { 
-    fontSize: 16, 
-    marginBottom: 8, 
-    color: "#444" 
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: "#444",
   },
-  pinContainer: { 
-    flexDirection: "row", 
-    justifyContent: "space-between", 
-    width: "100%" 
+  pinContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
-  pinInput: { 
-    width: 60, 
-    height: 60, 
-    borderWidth: 1, 
-    borderColor: "#ccc", 
-    borderRadius: 10, 
-    textAlign: "center", 
-    fontSize: 22, 
-    backgroundColor: "#f9f9f9", 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 2 }, 
-    shadowOpacity: 0.1, 
-    shadowRadius: 4 
+  pinInput: {
+    width: 55,
+    height: 55,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    textAlign: "center",
+    fontSize: 22,
+    backgroundColor: "#f9f9f9",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
-  switchContainer: { 
-    flexDirection: "row", 
-    justifyContent: "space-between", 
-    alignItems: "center", 
-    width: "100%", 
-    marginBottom: 15 
+  switchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 15,
   },
-  nextButton: { 
-    backgroundColor: "#E2261C", 
-    padding: 15, 
-    borderRadius: 10, 
-    width: "100%", 
-    alignItems: "center", 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 2 }, 
-    shadowOpacity: 0.2, 
-    shadowRadius: 4 
+  nextButton: {
+    backgroundColor: "#E2261C",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  nextText: { 
-    color: "#fff", 
-    fontSize: 18, 
-    fontWeight: "bold" 
+  nextText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

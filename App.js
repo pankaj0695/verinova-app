@@ -1,31 +1,41 @@
-import React from 'react';
+import React from "react";
+import { UserProvider } from "./store/UserContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import SignUpMobileScreen from './Screens/SignUpMobileScreen';
-import OtpVerificationScreen from "./Screens/OtpVerificationScreen";
-import PersonalDetailsScreen from "./Screens/PersonalDetailsScreen";
-import DocumentUploadScreen from "./Screens/DocumentUploadScreen";
-import MpinSetupScreen from "./Screens/MPinSetupScreen";
-import LoginScreen from "./Screens/LoginScreen";
-import HomeScreen from "./Screens/HomeScreen";
-import ServiceBotScreen from './Screens/ServiceBotScreen';
+import StartScreen from "./screens/start/StartScreen";
+import LoginScreen from "./screens/login/LoginScreen";
+import SignupMobileScreen from "./screens/signup/SignUpMobileScreen";
+import PersonalDetailsScreen from "./screens/signup/PersonalDetailsScreen";
+import DocumentUploadScreen from "./screens/signup/DocumentUploadScreen";
+import MpinSetupScreen from "./screens/signup/MPinSetupScreen";
+import HomeScreen from "./screens/home/HomeScreen";
+import ProfileScreen from "./screens/profile/ProfileScreen";
+import ServiceBotScreen from "./screens/servicebot/ServiceBotScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignupMobile" component={SignUpMobileScreen} />
-        <Stack.Screen name="OtpVerification" component={OtpVerificationScreen} />
-        <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
-        <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} />
-        <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
-        <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
-        {/* <Stack.Screen name="Login" component={LoginScreen} />   */}
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Start" component={StartScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignupMobile" component={SignupMobileScreen} />
+          <Stack.Screen
+            name="PersonalDetails"
+            component={PersonalDetailsScreen}
+          />
+          <Stack.Screen
+            name="DocumentUpload"
+            component={DocumentUploadScreen}
+          />
+          <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

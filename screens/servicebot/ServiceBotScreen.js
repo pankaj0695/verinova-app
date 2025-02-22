@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  Image,
 } from "react-native";
-import * as DocumentPicker from "expo-document-picker";
+import * as DocumentPicker from "expo-document-picker"; // Updated package
 import { Ionicons } from "@expo/vector-icons"; // Icons
 import { useNavigation } from "@react-navigation/native";
 
@@ -42,19 +41,23 @@ export default function ServiceBotScreen() {
 
   // Handle video upload
   const handleUploadVideo = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: "video/*",
-    });
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "video/*",
+      });
 
-    if (result.canceled) return;
+      if (result.type === "success") {
+        const newMessage = {
+          id: Math.random().toString(),
+          text: "📹 Video uploaded: " + result.name,
+          sender: "user",
+        };
 
-    const newMessage = {
-      id: Math.random().toString(),
-      text: "📹 Video uploaded: " + result.name,
-      sender: "user",
-    };
-
-    setMessages([...messages, newMessage]);
+        setMessages([...messages, newMessage]);
+      }
+    } catch (error) {
+      console.error("Document selection error:", error);
+    }
   };
 
   return (
@@ -95,7 +98,10 @@ export default function ServiceBotScreen() {
         <TouchableOpacity onPress={handleSendMessage} style={styles.sendButton}>
           <Ionicons name="send" size={20} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleUploadVideo} style={styles.uploadButton}>
+        <TouchableOpacity
+          onPress={handleUploadVideo}
+          style={styles.uploadButton}
+        >
           <Ionicons name="cloud-upload" size={20} color="black" />
         </TouchableOpacity>
       </View>
