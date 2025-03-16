@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   View,
@@ -74,7 +74,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     Animated.loop(
-      Animated.sequence([ 
+      Animated.sequence([
         Animated.timing(floatAnim, {
           toValue: -10,
           duration: 1000,
@@ -131,7 +131,9 @@ export default function HomeScreen() {
       {/* Main Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Welcome Section */}
-        <Text style={styles.greeting}>Hii User{userData.name.split(" ")[0]}</Text>
+        <Text style={styles.greeting}>
+          Hii User{userData.name.split(" ")[0]}
+        </Text>
         <TextInput
           style={styles.searchBox}
           placeholder="Search"
@@ -148,7 +150,9 @@ export default function HomeScreen() {
             scrollEventThrottle={16}
             onScrollBeginDrag={() => setIsScrolling(true)}
             onMomentumScrollEnd={(event) => {
-              const index = Math.round(event.nativeEvent.contentOffset.x / width);
+              const index = Math.round(
+                event.nativeEvent.contentOffset.x / width
+              );
               setCurrentIndex(index);
               setIsScrolling(false);
             }}
@@ -193,7 +197,10 @@ export default function HomeScreen() {
 
         {/* Floating Chatbot */}
         <Animated.View
-          style={[styles.chatbotIcon, { transform: [{ translateY: floatAnim }] }]}
+          style={[
+            styles.chatbotIcon,
+            { transform: [{ translateY: floatAnim }] },
+          ]}
         >
           <TouchableOpacity onPress={() => navigation.navigate("ServiceBot")}>
             <Ionicons name="chatbubbles" size={24} color={COLORS.white} />
@@ -218,7 +225,10 @@ export default function HomeScreen() {
           <Ionicons name="settings" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Settings</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("AskQuery")}
+        >
           <Ionicons name="videocam" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Ask Query</Text>
         </TouchableOpacity>

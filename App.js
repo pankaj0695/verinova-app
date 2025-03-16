@@ -10,15 +10,14 @@ import DocumentUploadScreen from "./screens/auth/signup/DocumentUploadScreen";
 import MpinSetupScreen from "./screens/auth/signup/MPinSetupScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import ProfileScreen from "./screens/profile/ProfileScreen";
+import AskQueryScreen from "./screens/askQuery/AskQueryScreen";
 import ServiceBotScreen from "./screens/servicebot/ServiceBotScreen";
 import LoanScreen from "./screens/loan/LoanScreen";
 import LoanDetailsScreen from "./screens/loan/LoanDetailsScreen";
 import LoanCategoryScreen from "./screens/loan/LoanCategoryScreen";
 import WithdrawalScreen from "./screens/withdrawal/WithdrawalScreen";
-import PolicyScreen from './screens/policies/PolicyScreen'; 
-import FAQ from './screens/faq/FAQ';
-
-
+import PolicyScreen from "./screens/policies/PolicyScreen";
+import FAQ from "./screens/faq/FAQ";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +49,11 @@ export default function App() {
             name="Profile"
             component={ProfileScreen}
           />
+          <Stack.Screen
+            options={{ animation: "none" }}
+            name="AskQuery"
+            component={AskQueryScreen}
+          />
           <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
           <Stack.Screen name="Loan" component={LoanScreen} />
           <Stack.Screen name="LoanDetails" component={LoanDetailsScreen} />
@@ -57,7 +61,7 @@ export default function App() {
           <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
           <Stack.Screen name="Policies" component={PolicyScreen} />
           <Stack.Screen name="Faq" component={FAQ} />
-          </Stack.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
   );
