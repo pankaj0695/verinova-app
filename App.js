@@ -17,6 +17,7 @@ import LoanDetailsScreen from "./screens/loan/LoanDetailsScreen";
 import LoanCategoryScreen from "./screens/loan/LoanCategoryScreen";
 import WithdrawalScreen from "./screens/withdrawal/WithdrawalScreen";
 import PolicyScreen from "./screens/policies/PolicyScreen";
+import PolicyDetailsScreen from "./screens/policies/PolicyDetailsScreen";
 import FAQ from "./screens/faq/FAQ";
 
 const Stack = createStackNavigator();
@@ -26,41 +27,35 @@ export default function App() {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen
-            options={{ animation: "none" }}
-            name="Home"
-            component={HomeScreen}
-          />
+          {/* Main Screens */}
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignupMobile" component={SignupMobileScreen} />
-          <Stack.Screen
-            name="PersonalDetails"
-            component={PersonalDetailsScreen}
-          />
-          <Stack.Screen
-            name="DocumentUpload"
-            component={DocumentUploadScreen}
-          />
+          <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
+          <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} />
           <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
 
-          <Stack.Screen
-            options={{ animation: "none" }}
-            name="Profile"
-            component={ProfileScreen}
-          />
-          <Stack.Screen
-            options={{ animation: "none" }}
-            name="AskQuery"
-            component={AskQueryScreen}
-          />
+          {/* Profile & Services */}
+          <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
+
+          {/* Loan Screens */}
           <Stack.Screen name="Loan" component={LoanScreen} />
           <Stack.Screen name="LoanDetails" component={LoanDetailsScreen} />
           <Stack.Screen name="LoanCategory" component={LoanCategoryScreen} />
           <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
+
+          {/* Policies & FAQs */}
           <Stack.Screen name="Policies" component={PolicyScreen} />
           <Stack.Screen name="Faq" component={FAQ} />
+
+          {/* Policy Details (Ensure it's correctly named when navigating) */}
+          <Stack.Screen 
+            name="PolicyDetailsScreen" 
+            component={PolicyDetailsScreen} 
+            options={{ title: "Policy Details", headerShown: true }} 
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

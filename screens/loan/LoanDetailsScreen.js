@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Animated,
   Image,
+  ScrollView,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoanDetailsScreen() {
   const route = useRoute();
@@ -67,69 +69,137 @@ export default function LoanDetailsScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Vyom Logo */}
-      <Image
-        source={require("../../assets/images/verinova-logo.png")}
-        style={styles.logo}
-      />
-
-      {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.title}>{loanName}</Text>
-      <Text style={styles.description}>
-        {loanDetails[loanName]?.description}
-      </Text>
-
-      <Text style={styles.sectionTitle}>Required Documents</Text>
-      {loanDetails[loanName]?.documents.map((doc, index) => (
-        <Text key={index} style={styles.document}>{`• ${doc}`}</Text>
-      ))}
-
-      <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
-        <TouchableOpacity
-          style={styles.applyButton}
-          onPressIn={animatePressIn}
-          onPressOut={animatePressOut}
-        >
-          <Text style={styles.applyText}>Apply Now</Text>
+      {/* Navbar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
-      </Animated.View>
+        <Text style={styles.topBarTitle}>{loanName}</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Loan Image */}
+        <Image
+          source={require("../../assets/images/loan-bg.jpg")}
+          style={styles.banner}
+        />
+
+        {/* Loan Description */}
+        <Text style={styles.description}>{loanDetails[loanName]?.description}</Text>
+
+        {/* Required Documents */}
+        <View style={styles.documentsContainer}>
+          <Text style={styles.sectionTitle}>Required Documents</Text>
+          {loanDetails[loanName]?.documents.map((doc, index) => (
+            <View key={index} style={styles.documentItem}>
+              <Ionicons name="document-text-outline" size={20} color="#007bff" />
+              <Text style={styles.document}>{doc}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Apply Now Button */}
+        <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+          <TouchableOpacity
+            style={styles.applyButton}
+            onPressIn={animatePressIn}
+            onPressOut={animatePressOut}
+          >
+            <Text style={styles.applyText}>Apply Now</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f8f8", padding: 20 },
-  logo: { width: 80, height: 80, alignSelf: "center", marginBottom: 10 },
-  backButton: { marginBottom: 15, padding: 5 },
-  backText: { fontSize: 16, color: "#035697", fontWeight: "bold" },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
+  container: { flex: 1, backgroundColor: "#f8f8f8" },
+  scrollContainer: { alignItems: "center", paddingBottom: 20 },
+
+  /* Navbar - Matches previous screens */
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderColor: "#ddd",
+    backgroundColor: "#fff",
+    elevation: 2,
   },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    paddingTop: 30, // Ensures consistency with other screens
+  },
+  topBarTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    paddingTop: 30, // Ensures text alignment with other screens
+    color: "black",
+  },
+
+  /* Banner Image */
+  banner: {
+    width: "90%",
+    height: 180,
+    borderRadius: 12,
+    marginVertical: 15,
+  },
+
+  /* Loan Details */
   description: {
     fontSize: 16,
     color: "#555",
     marginBottom: 20,
     textAlign: "center",
+    width: "90%",
   },
-  sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
-  document: { fontSize: 16, color: "#444", marginBottom: 5 },
+
+  /* Documents Section */
+  documentsContainer: {
+    width: "90%",
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#333",
+  },
+  documentItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  document: {
+    fontSize: 16,
+    color: "#444",
+    marginLeft: 8,
+  },
+
+  /* Apply Now Button */
   applyButton: {
     backgroundColor: "#E2261C",
     padding: 15,
     borderRadius: 10,
-    width: "100%",
+    width: "90%",
     alignItems: "center",
     marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   applyText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 });

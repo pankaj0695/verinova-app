@@ -12,45 +12,37 @@ export default function LoanScreen() {
       id: "1",
       name: "Home Loan",
       icon: "home",
-      description:
-        "Get easy home loans at low interest rates. Flexible tenure up to 30 years.",
-      color: "#FF9A8B",
+      description: "Get easy home loans at low interest rates. Flexible tenure up to 30 years.",
+      color: ["#FF9A8B", "#FF6A88"],
     },
     {
       id: "2",
       name: "Car Loan",
       icon: "car",
-      description:
-        "Drive your dream car with our car loan options. Quick approval and low EMIs.",
-      color: "#42E695",
+      description: "Drive your dream car with our car loan options. Quick approval and low EMIs.",
+      color: ["#42E695", "#3BB2B8"],
     },
     {
       id: "3",
       name: "Personal Loan",
       icon: "user",
-      description:
-        "Quick and hassle-free personal loans for your needs. No collateral required.",
-      color: "#FAD961",
+      description: "Quick and hassle-free personal loans for your needs. No collateral required.",
+      color: ["#FAD961", "#F76B1C"],
     },
     {
       id: "4",
       name: "Business Loan",
       icon: "chart-line",
-      description:
-        "Expand your business with our flexible loan plans. High loan amounts available.",
-      color: "#A18CD1",
+      description: "Expand your business with our flexible loan plans. High loan amounts available.",
+      color: ["#A18CD1", "#FBC2EB"],
     },
-    // Add more loan categories if needed
   ];
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {/* Header */}
       <View style={styles.topBar}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.topBarTitle}>Loan Categories</Text>
@@ -59,27 +51,21 @@ export default function LoanScreen() {
       {/* Title */}
       <Text style={styles.title}>Choose Your Loan Type</Text>
 
-      {/* Loan Categories Grid */}
+      {/* Loan Categories List */}
       <View style={styles.grid}>
         {loanCategories.map((category) => (
           <TouchableOpacity
             key={category.id}
-            style={[
-              styles.loanBox,
-              { backgroundColor: category.color, width: screenWidth * 0.7 },
-            ]}
-            onPress={() =>
-              navigation.navigate("LoanCategory", { category: category.name })
-            }
+            style={[styles.loanBox, { width: screenWidth * 0.9 }]}
+            onPress={() => navigation.navigate("LoanCategory", { category: category.name })}
           >
-            <FontAwesome5
-              name={category.icon}
-              size={34}
-              color="white"
-              style={styles.icon}
-            />
-            <Text style={styles.loanText}>{category.name}</Text>
-            <Text style={styles.loanDescription}>{category.description}</Text>
+            <View style={styles.iconContainer}>
+              <FontAwesome5 name={category.icon} size={28} color="white" />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.loanText}>{category.name}</Text>
+              <Text style={styles.loanDescription}>{category.description}</Text>
+            </View>
           </TouchableOpacity>
         ))}
       </View>
@@ -88,14 +74,10 @@ export default function LoanScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    paddingTop: 40,
-  },
   scrollContainer: {
-    alignItems: "center", // Fix for the scrollView layout issue
+    alignItems: "center",
+    backgroundColor: "#f8f8f8",
+    paddingBottom: 20,
   },
   topBar: {
     flexDirection: "row",
@@ -105,15 +87,18 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderColor: "#ddd",
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#fff",
+    elevation: 2,
   },
   backButton: {
     position: "absolute",
+    paddingTop: 30, 
     left: 16,
   },
   topBarTitle: {
     fontSize: 22,
     fontWeight: "bold",
+    paddingTop: 30, 
     color: "black",
   },
   title: {
@@ -122,44 +107,45 @@ const styles = StyleSheet.create({
     color: "black",
     marginVertical: 20,
     textAlign: "center",
-    paddingHorizontal: 15,
   },
   grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    paddingHorizontal: 10,
+    width: "100%",
+    alignItems: "center",
   },
   loanBox: {
-    height: 220,
-    borderRadius: 16,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    margin: 15,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 15,
+    marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    overflow: "hidden",
   },
-  icon: {
-    marginBottom: 12,
-    alignSelf: "center",
-    color: "000"
+  iconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#007bff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 15,
+  },
+  textContainer: {
+    flex: 1,
   },
   loanText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "000",
-    textAlign: "center",
+    color: "#333",
   },
   loanDescription: {
-    fontSize: 18,
-    color: "white",
-    textAlign: "center",
-    marginTop: 6,
-    paddingHorizontal: 10,
+    fontSize: 14,
+    color: "#555",
+    marginTop: 4,
   },
 });
+
