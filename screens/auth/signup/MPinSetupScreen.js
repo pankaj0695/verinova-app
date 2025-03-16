@@ -11,8 +11,8 @@ import {
   Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../constants/colors";
-import { UserContext } from "../../store/UserContext";
+import { COLORS } from "../../../constants/colors";
+import { UserContext } from "../../../store/UserContext";
 
 export default function MpinSetupScreen() {
   const navigation = useNavigation();
@@ -93,7 +93,7 @@ export default function MpinSetupScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/verinova-logo.png")}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 

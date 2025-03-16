@@ -10,10 +10,9 @@ import {
   Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as LocalAuthentication from "expo-local-authentication"; // For fingerprint
-import { UserContext } from "../../store/UserContext";
-import { COLORS } from "../../constants/colors";
+import * as LocalAuthentication from "expo-local-authentication";
+import { UserContext } from "../../../store/UserContext";
+import { COLORS } from "../../../constants/colors";
 
 export default function StartScreen() {
   const navigation = useNavigation();
@@ -115,7 +114,7 @@ export default function StartScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/verinova-logo.png")}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 
@@ -155,7 +154,7 @@ export default function StartScreen() {
           style={styles.fingerprintButton}
         >
           <Image
-            source={require("../../assets/images/fingerprint.png")}
+            source={require("../../../assets/images/fingerprint.png")}
             style={styles.fingerprintIcon}
           />
           <Text style={styles.fingerprintText}>Use Fingerprint</Text>

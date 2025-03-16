@@ -11,9 +11,9 @@ import {
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import uploadFileToS3 from "../../helper/helper";
-import { UserContext } from "../../store/UserContext";
-import { COLORS } from "../../constants/colors";
+import uploadFileToS3 from "../../../helper/helper";
+import { UserContext } from "../../../store/UserContext";
+import { COLORS } from "../../../constants/colors";
 
 export default function DocumentUploadScreen() {
   const navigation = useNavigation();
@@ -99,7 +99,7 @@ export default function DocumentUploadScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/verinova-logo.png")}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 

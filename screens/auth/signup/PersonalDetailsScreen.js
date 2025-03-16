@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../store/UserContext";
-import { COLORS } from "../../constants/colors";
+import { UserContext } from "../../../store/UserContext";
+import { COLORS } from "../../../constants/colors";
 
 export default function PersonalDetailsScreen() {
   const navigation = useNavigation();
@@ -52,7 +52,7 @@ export default function PersonalDetailsScreen() {
     <View style={styles.container}>
       {/* Vyom Logo */}
       <Image
-        source={require("../../assets/images/verinova-logo.png")}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 

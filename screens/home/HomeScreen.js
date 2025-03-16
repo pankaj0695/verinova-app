@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient"; // For gradient background
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../store/UserContext";
 import { COLORS } from "../../constants/colors";
@@ -22,22 +23,45 @@ export default function HomeScreen() {
   const floatAnim = useRef(new Animated.Value(0)).current;
   const { userData } = useContext(UserContext);
   const scrollViewRef = useRef();
-  const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
 
   const displayCards = [
     require("../../assets/images/display-card1.jpeg"),
-    require("../../assets/images/display-card2.jpeg"),
     require("../../assets/images/display-card3.jpg"),
+    require("../../assets/images/display-card2.jpeg"),
     require("../../assets/images/display-card4.jpeg"),
   ];
 
   const quickTasks = [
-    { id: "1", title: "Customer Service", icon: "headset-outline" },
-    { id: "2", title: "Loan", icon: "cash-outline" },
-    { id: "3", title: "Withdrawal", icon: "card-outline" },
-    { id: "4", title: "Policies", icon: "document-text-outline" },
+    {
+      id: "1",
+      title: "Customer Service",
+      icon: "headset-outline",
+      screen: "CustomerService",
+      gradient: ["#FF806D", "#FF345D"],
+    },
+    {
+      id: "2",
+      title: "Loan",
+      icon: "cash-outline",
+      screen: "Loan",
+      gradient: ["#EF3AFF", "#5822BB"],
+    },
+    {
+      id: "3",
+      title: "Withdrawal",
+      icon: "card-outline",
+      screen: "Withdrawal",
+      gradient: ["#4DF9FF", "#1280C4"],
+    },
+    {
+      id: "4",
+      title: "Policies",
+      icon: "document-text-outline",
+      screen: "Policies",
+      gradient: ["#FFE415", "#C16407"],
+    },
   ];
 
   useEffect(() => {
@@ -57,7 +81,6 @@ export default function HomeScreen() {
     ).start();
   }, []);
 
-  // Auto Scroll Every 3 Seconds if User is Not Interacting
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isScrolling) {
@@ -81,10 +104,13 @@ export default function HomeScreen() {
         <TouchableOpacity>
           <Ionicons name="menu" size={28} color={COLORS.black} />
         </TouchableOpacity>
-        <Image
-          source={require("../../assets/images/verinova-plain.png")}
-          style={styles.logo}
-        />
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../../assets/images/verinova-plain.png")}
+            style={styles.logo}
+          />
+          <Text style={styles.logoTitle}>VeriNova</Text>
+        </View>
         <TouchableOpacity>
           <Ionicons
             name="notifications-outline"
@@ -139,9 +165,18 @@ export default function HomeScreen() {
       <Text style={styles.sectionTitle}>Quick Tasks</Text>
       <View style={styles.quickTaskGrid}>
         {quickTasks.map((task, index) => (
-          <TouchableOpacity key={index} style={styles.taskBox}>
-            <Ionicons name={task.icon} size={35} color={COLORS.primary} />
-            <Text style={styles.taskText}>{task.title}</Text>
+          <TouchableOpacity
+            key={index}
+            style={styles.taskBox}
+            onPress={() => navigation.navigate(task.screen)}
+          >
+            <LinearGradient
+              colors={task.gradient}
+              style={styles.gradientBackground}
+            >
+              <Ionicons name={task.icon} size={40} color="white" />
+              <Text style={styles.taskText}>{task.title}</Text>
+            </LinearGradient>
           </TouchableOpacity>
         ))}
       </View>
@@ -158,23 +193,23 @@ export default function HomeScreen() {
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home" size={24} color={COLORS.primary} />
+          <Ionicons name="home-sharp" size={26} color={COLORS.primary} />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Profile")}
         >
-          <Ionicons name="person" size={24} color={COLORS.black} />
+          <Ionicons name="person" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="settings" size={24} color={COLORS.black} />
+          <Ionicons name="settings" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Settings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="help-circle" size={24} color={COLORS.black} />
-          <Text style={styles.navText}>Help</Text>
+          <Ionicons name="videocam" size={26} color={COLORS.black} />
+          <Text style={styles.navText}>Ask Query</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -194,10 +229,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  logoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   logo: {
-    width: 100,
+    width: 38,
     height: 30,
     resizeMode: "contain",
+  },
+  logoTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 10,
   },
   greeting: {
     fontSize: 24,
@@ -248,18 +292,31 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   taskBox: {
-    backgroundColor: COLORS.gray,
+    backgroundColor: "white",
     height: 120,
-    borderRadius: 10,
     width: 120,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
+    elevation: 4, // Shadow effect
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  gradientBackground: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
   },
   taskText: {
     fontSize: 16,
     fontWeight: "500",
-    color: COLORS.black,
+    color: "white",
     textAlign: "center",
     marginTop: 5,
   },
@@ -274,14 +331,15 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: COLORS.white,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     paddingVertical: 12,
-    borderTopWidth: 1,
-    borderColor: COLORS.subText,
+    borderRadius: 20,
+    elevation: 5, // Floating effect
+    margin: 10,
     position: "absolute",
     bottom: 0,
-    width: "100%",
-    alignSelf: "center",
+    left: 10,
+    right: 10,
   },
   navItem: {
     flex: 1,

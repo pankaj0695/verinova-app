@@ -57,7 +57,7 @@ export const UserProvider = ({ children }) => {
 
   const signup = async () => {
     const response = await axios.post(
-      "http://192.168.105.118:4000/signup",
+      "http://192.168.220.118:4000/signup",
       userData
     );
     if (response.status === 200) {
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const login = async ({ mobile, mpin }) => {
-    const response = await axios.post("http://192.168.105.118:4000/login", {
+    const response = await axios.post("http://192.168.220.118:4000/login", {
       mobile,
       mpin,
     });

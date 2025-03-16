@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { UserContext } from "../../store/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import { COLORS } from "../../constants/colors";
 
 const ProfileScreen = () => {
   const { userData, logout } = useContext(UserContext);
@@ -67,6 +68,29 @@ const ProfileScreen = () => {
         <Ionicons name="log-out-outline" size={22} color="white" />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Ionicons name="home-sharp" size={26} color={COLORS.black} />
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="person" size={26} color={COLORS.primary} />
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="settings" size={26} color={COLORS.black} />
+          <Text style={styles.navText}>Settings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="videocam" size={26} color={COLORS.black} />
+          <Text style={styles.navText}>Ask Query</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -144,6 +168,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 10,
+  },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    paddingVertical: 12,
+    borderRadius: 20,
+    elevation: 5, // Floating effect
+    margin: 10,
+    position: "absolute",
+    bottom: 0,
+    left: 10,
+    right: 10,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+  navText: {
+    fontSize: 12,
+    marginTop: 4,
+    color: COLORS.black,
   },
 });
 

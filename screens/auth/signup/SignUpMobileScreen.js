@@ -10,8 +10,8 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../store/UserContext";
-import { COLORS } from "../../constants/colors";
+import { UserContext } from "../../../store/UserContext";
+import { COLORS } from "../../../constants/colors";
 
 export default function SignupMobileScreen() {
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ export default function SignupMobileScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/verinova-logo.png")}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 

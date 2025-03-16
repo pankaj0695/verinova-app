@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,23 +7,23 @@ import {
   StyleSheet,
   Image,
   Animated,
-} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {COLORS} from '../../constants/colors';
+} from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { COLORS } from "../../../constants/colors";
 
 export default function OtpVerificationScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
   const buttonScale = useRef(new Animated.Value(1)).current;
-  const {confirmation} = route.params;
+  const { confirmation } = route.params;
 
   const verifyOTP = async () => {
     try {
       await confirmation.confirm(otp);
-      navigation.navigate('PersonalDetails');
+      navigation.navigate("PersonalDetails");
     } catch (error) {
-      Alert.alert('Invalid OTP', 'Please enter the correct OTP.');
+      Alert.alert("Invalid OTP", "Please enter the correct OTP.");
     }
   };
 
@@ -33,12 +33,12 @@ export default function OtpVerificationScreen() {
       useNativeDriver: true,
     }).start();
   const animatePressOut = () =>
-    Animated.spring(buttonScale, {toValue: 1, useNativeDriver: true}).start();
+    Animated.spring(buttonScale, { toValue: 1, useNativeDriver: true }).start();
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/verinova-logo.png')}
+        source={require("../../../assets/images/verinova-logo.png")}
         style={styles.logo}
       />
 
@@ -56,12 +56,13 @@ export default function OtpVerificationScreen() {
           keyboardType="numeric"
         />
 
-        <Animated.View style={{transform: [{scale: buttonScale}]}}>
+        <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
           <TouchableOpacity
             style={styles.nextButton}
             onPress={verifyOTP}
             onPressIn={animatePressIn}
-            onPressOut={animatePressOut}>
+            onPressOut={animatePressOut}
+          >
             <Text style={styles.nextText}>Verify OTP</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -73,42 +74,42 @@ export default function OtpVerificationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: COLORS.background,
   },
-  logo: {width: 140, height: 140, marginBottom: 30},
+  logo: { width: 140, height: 140, marginBottom: 30 },
   signupBox: {
-    width: '90%',
-    backgroundColor: 'white',
+    width: "90%",
+    backgroundColor: "white",
     padding: 25,
     borderRadius: 12,
     elevation: 4,
-    alignItems: 'center',
+    alignItems: "center",
   },
-  title: {fontSize: 22, fontWeight: 'bold', marginBottom: 15, color: '#333'},
-  label: {fontSize: 16, marginBottom: 8, color: '#444'},
+  title: { fontSize: 22, fontWeight: "bold", marginBottom: 15, color: "#333" },
+  label: { fontSize: 16, marginBottom: 8, color: "#444" },
   input: {
-    width: '100%',
+    width: "100%",
     padding: 12,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     fontSize: 16,
     marginBottom: 20,
   },
   nextButton: {
-    backgroundColor: '#E2261C',
+    backgroundColor: "#E2261C",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
-    width: '100%',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    width: "100%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
-  nextText: {color: '#fff', fontSize: 18, fontWeight: 'bold'},
+  nextText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 });
