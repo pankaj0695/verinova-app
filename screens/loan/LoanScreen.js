@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
 export default function LoanScreen() {
   const navigation = useNavigation();
+  const screenWidth = Dimensions.get("window").width; // Get the screen width
 
   const loanCategories = [
     {
@@ -39,10 +40,11 @@ export default function LoanScreen() {
         "Expand your business with our flexible loan plans. High loan amounts available.",
       color: "#A18CD1",
     },
+    // Add more loan categories if needed
   ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       {/* Header */}
       <View style={styles.topBar}>
         <TouchableOpacity
@@ -62,7 +64,10 @@ export default function LoanScreen() {
         {loanCategories.map((category) => (
           <TouchableOpacity
             key={category.id}
-            style={[styles.loanBox, { backgroundColor: category.color }]}
+            style={[
+              styles.loanBox,
+              { backgroundColor: category.color, width: screenWidth * 0.7 },
+            ]}
             onPress={() =>
               navigation.navigate("LoanCategory", { category: category.name })
             }
@@ -78,7 +83,7 @@ export default function LoanScreen() {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -89,6 +94,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 40,
   },
+  scrollContainer: {
+    alignItems: "center", // Fix for the scrollView layout issue
+  },
   topBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -97,6 +105,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderColor: "#ddd",
+    backgroundColor: "#f8f8f8",
   },
   backButton: {
     position: "absolute",
@@ -113,37 +122,41 @@ const styles = StyleSheet.create({
     color: "black",
     marginVertical: 20,
     textAlign: "center",
+    paddingHorizontal: 15,
   },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   loanBox: {
-    width: 200,
-    height: 140,
-    borderRadius: 12,
+    height: 220,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    padding: 15,
-    margin: 10,
+    padding: 20,
+    margin: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
-    shadowRadius: 5,
+    shadowRadius: 6,
+    elevation: 5,
+    overflow: "hidden",
   },
   icon: {
-    marginBottom: 8,
+    marginBottom: 12,
+    alignSelf: "center",
+    color: "000"
   },
   loanText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white",
+    color: "000",
     textAlign: "center",
   },
   loanDescription: {
-    fontSize: 14,
+    fontSize: 18,
     color: "white",
     textAlign: "center",
     marginTop: 6,

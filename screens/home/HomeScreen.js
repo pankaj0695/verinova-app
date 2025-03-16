@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
+import { Ionicons } from '@expo/vector-icons';
+
 import {
   View,
   Text,
@@ -10,7 +12,6 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient"; // For gradient background
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../store/UserContext";
@@ -62,11 +63,18 @@ export default function HomeScreen() {
       screen: "Policies",
       gradient: ["#FFE415", "#C16407"],
     },
+    {
+      id: "5",
+      title: "FAQ",
+      icon: "document",
+      screen: "Faq",
+      gradient: ["#11FFEF", "#03119F"],
+    },
   ];
 
   useEffect(() => {
     Animated.loop(
-      Animated.sequence([
+      Animated.sequence([ 
         Animated.timing(floatAnim, {
           toValue: -10,
           duration: 1000,
@@ -120,75 +128,78 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Welcome Section */}
-      <Text style={styles.greeting}>Hi, {userData.name.split(" ")[0]}</Text>
-      <TextInput
-        style={styles.searchBox}
-        placeholder="Search"
-        placeholderTextColor={COLORS.subText}
-      />
+      {/* Main Scrollable Content */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Welcome Section */}
+        <Text style={styles.greeting}>Hii User{userData.name.split(" ")[0]}</Text>
+        <TextInput
+          style={styles.searchBox}
+          placeholder="Search"
+          placeholderTextColor={COLORS.subText}
+        />
 
-      {/* Sliding Cards Section */}
-      <View style={styles.cardContainer}>
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={16}
-          onScrollBeginDrag={() => setIsScrolling(true)}
-          onMomentumScrollEnd={(event) => {
-            const index = Math.round(event.nativeEvent.contentOffset.x / width);
-            setCurrentIndex(index);
-            setIsScrolling(false);
-          }}
-        >
-          {displayCards.map((card, index) => (
-            <View key={index} style={styles.cardWrapper}>
-              <Image source={card} style={styles.cardImage} />
-            </View>
-          ))}
-        </ScrollView>
+        {/* Sliding Cards Section */}
+        <View style={styles.cardContainer}>
+          <ScrollView
+            ref={scrollViewRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={16}
+            onScrollBeginDrag={() => setIsScrolling(true)}
+            onMomentumScrollEnd={(event) => {
+              const index = Math.round(event.nativeEvent.contentOffset.x / width);
+              setCurrentIndex(index);
+              setIsScrolling(false);
+            }}
+          >
+            {displayCards.map((card, index) => (
+              <View key={index} style={styles.cardWrapper}>
+                <Image source={card} style={styles.cardImage} />
+              </View>
+            ))}
+          </ScrollView>
 
-        {/* Dots Indicator */}
-        <View style={styles.indicatorContainer}>
-          {displayCards.map((_, i) => (
-            <View
-              key={i}
-              style={[styles.dot, { opacity: currentIndex === i ? 1 : 0.3 }]}
-            />
+          {/* Dots Indicator */}
+          <View style={styles.indicatorContainer}>
+            {displayCards.map((_, i) => (
+              <View
+                key={i}
+                style={[styles.dot, { opacity: currentIndex === i ? 1 : 0.3 }]}
+              />
+            ))}
+          </View>
+        </View>
+
+        {/* Quick Tasks */}
+        <Text style={styles.sectionTitle}>Quick Tasks</Text>
+        <View style={styles.quickTaskGrid}>
+          {quickTasks.map((task, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.taskBox}
+              onPress={() => navigation.navigate(task.screen)}
+            >
+              <LinearGradient
+                colors={task.gradient}
+                style={styles.gradientBackground}
+              >
+                <Ionicons name={task.icon} size={40} color="white" />
+                <Text style={styles.taskText}>{task.title}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
           ))}
         </View>
-      </View>
 
-      {/* Quick Tasks */}
-      <Text style={styles.sectionTitle}>Quick Tasks</Text>
-      <View style={styles.quickTaskGrid}>
-        {quickTasks.map((task, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.taskBox}
-            onPress={() => navigation.navigate(task.screen)}
-          >
-            <LinearGradient
-              colors={task.gradient}
-              style={styles.gradientBackground}
-            >
-              <Ionicons name={task.icon} size={40} color="white" />
-              <Text style={styles.taskText}>{task.title}</Text>
-            </LinearGradient>
+        {/* Floating Chatbot */}
+        <Animated.View
+          style={[styles.chatbotIcon, { transform: [{ translateY: floatAnim }] }]}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("ServiceBot")}>
+            <Ionicons name="chatbubbles" size={24} color={COLORS.white} />
           </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Floating Chatbot */}
-      <Animated.View
-        style={[styles.chatbotIcon, { transform: [{ translateY: floatAnim }] }]}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("ServiceBot")}>
-          <Ionicons name="chatbubbles" size={24} color={COLORS.white} />
-        </TouchableOpacity>
-      </Animated.View>
+        </Animated.View>
+      </ScrollView>
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
@@ -256,6 +267,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.black,
     marginTop: 10,
+  },
+  scrollContent: {
+    paddingBottom: 100, // To ensure content doesn't get hidden behind bottom navigation
   },
   cardContainer: {
     alignItems: "center",

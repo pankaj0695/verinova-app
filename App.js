@@ -14,6 +14,11 @@ import ServiceBotScreen from "./screens/servicebot/ServiceBotScreen";
 import LoanScreen from "./screens/loan/LoanScreen";
 import LoanDetailsScreen from "./screens/loan/LoanDetailsScreen";
 import LoanCategoryScreen from "./screens/loan/LoanCategoryScreen";
+import WithdrawalScreen from "./screens/withdrawal/WithdrawalScreen";
+import PolicyScreen from './screens/policies/PolicyScreen'; 
+import FAQ from './screens/faq/FAQ';
+
+
 
 const Stack = createStackNavigator();
 
@@ -49,7 +54,10 @@ export default function App() {
           <Stack.Screen name="Loan" component={LoanScreen} />
           <Stack.Screen name="LoanDetails" component={LoanDetailsScreen} />
           <Stack.Screen name="LoanCategory" component={LoanCategoryScreen} />
-        </Stack.Navigator>
+          <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
+          <Stack.Screen name="Policies" component={PolicyScreen} />
+          <Stack.Screen name="Faq" component={FAQ} />
+          </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
   );
