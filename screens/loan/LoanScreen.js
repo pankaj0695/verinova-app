@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
@@ -12,29 +19,41 @@ export default function LoanScreen() {
       id: "1",
       name: "Home Loan",
       icon: "home",
-      description: "Get easy home loans at low interest rates. Flexible tenure up to 30 years.",
+      description:
+        "Get easy home loans at low interest rates. Flexible tenure up to 30 years.",
       color: ["#FF9A8B", "#FF6A88"],
     },
     {
       id: "2",
       name: "Car Loan",
       icon: "car",
-      description: "Drive your dream car with our car loan options. Quick approval and low EMIs.",
+      description:
+        "Drive your dream car with our car loan options. Quick approval and low EMIs.",
       color: ["#42E695", "#3BB2B8"],
     },
     {
       id: "3",
       name: "Personal Loan",
       icon: "user",
-      description: "Quick and hassle-free personal loans for your needs. No collateral required.",
+      description:
+        "Quick and hassle-free personal loans for your needs. No collateral required.",
       color: ["#FAD961", "#F76B1C"],
     },
     {
       id: "4",
       name: "Business Loan",
       icon: "chart-line",
-      description: "Expand your business with our flexible loan plans. High loan amounts available.",
+      description:
+        "Expand your business with our flexible loan plans. High loan amounts available.",
       color: ["#A18CD1", "#FBC2EB"],
+    },
+    {
+      id: "5",
+      name: "Educational Loan",
+      icon: "book-open",
+      description:
+        "Finance your education with our affordable loan options. Low-interest rates available.",
+      color: ["#6DD5FA", "#FFFFFF"],
     },
   ];
 
@@ -42,7 +61,10 @@ export default function LoanScreen() {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {/* Header */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.topBarTitle}>Loan Categories</Text>
@@ -57,7 +79,9 @@ export default function LoanScreen() {
           <TouchableOpacity
             key={category.id}
             style={[styles.loanBox, { width: screenWidth * 0.9 }]}
-            onPress={() => navigation.navigate("LoanCategory", { category: category.name })}
+            onPress={() =>
+              navigation.navigate("LoanCategory", { category: category.name })
+            }
           >
             <View style={styles.iconContainer}>
               <FontAwesome5 name={category.icon} size={28} color="white" />
@@ -92,13 +116,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    paddingTop: 30, 
+    paddingTop: 30,
     left: 16,
   },
   topBarTitle: {
     fontSize: 22,
     fontWeight: "bold",
-    paddingTop: 30, 
+    paddingTop: 30,
     color: "black",
   },
   title: {
@@ -148,4 +172,3 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-
