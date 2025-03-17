@@ -62,11 +62,12 @@ const FAQ = () => {
           onPress={() => toggleExpand(index)} // Toggle FAQ expansion
           activeOpacity={0.7}
         >
+          <Ionicons name="help-circle-outline" size={20} color="white" style={styles.faqIcon} />
           <Text style={styles.questionText}>{faq.question}</Text>
           <Ionicons
             name={isExpanded ? "chevron-up-outline" : "chevron-down-outline"}  // Switch icons based on expansion state
             size={20}
-            color="#007bff"
+            color="#fff"
             style={styles.icon}
           />
         </TouchableOpacity>
@@ -81,7 +82,7 @@ const FAQ = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Frequently Asked Questions</Text>
+      <Text style={styles.title}>FAQs</Text>
       <View style={styles.faqCardsContainer}>
         {faqs.map((faq, index) => renderFAQ(faq, index))}
       </View>
@@ -92,7 +93,7 @@ const FAQ = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,  // Ensures ScrollView takes up the entire height and remains scrollable
-    padding: 15,
+    padding: 20,
     backgroundColor: "#f7f7f7",
   },
   title: {
@@ -128,6 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
+    flex: 1,
+    marginLeft: 10
   },
   answerContainer: {
     padding: 15,
@@ -142,6 +145,9 @@ const styles = StyleSheet.create({
   icon: {
     transform: [{ rotate: "0deg" }],
   },
+  faqIcon: {
+    marginRight: 10,
+  }
 });
 
 export default FAQ;

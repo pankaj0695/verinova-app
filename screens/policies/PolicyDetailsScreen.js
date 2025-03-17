@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import for icons
 
@@ -7,25 +7,32 @@ export default function PolicyDetailsScreen({ route }) {
   const navigation = useNavigation();
   const { name, description, link } = route.params; // Extracting necessary params
 
-  const openLink = () => {
-    Linking.openURL(link).catch((err) => console.error("Failed to open URL:", err));
+  const openLink = async () => {
+    if (!link) {
+      Alert.alert("Error", "No policy link available.");
+      return;
+    }
+    const supported = await Linking.canOpenURL(link);
+    if (supported) {
+      await Linking.openURL(link);
+    } else {
+      Alert.alert("Error", "Failed to open the policy page.");
+    }
   };
 
-  const downloadPolicy = () => {
-    Linking.openURL("https://www.unionbankofindia.co.in/pdf/Policy%20on%20Compensation,%20Grievance%20Redressal%20&%20Customer%20Rights%202024-25.pdf")
-      .catch((err) => console.error("Failed to download policy:", err));
+  const downloadPolicy = async () => {
+    const pdfUrl =
+      "https://www.unionbankofindia.co.in/pdf/Policy%20on%20Compensation,%20Grievance%20Redressal%20&%20Customer%20Rights%202024-25.pdf";
+    const supported = await Linking.canOpenURL(pdfUrl);
+    if (supported) {
+      await Linking.openURL(pdfUrl);
+    } else {
+      Alert.alert("Error", "Failed to download policy.");
+    }
   };
 
   return (
     <View style={styles.container}>
-      {/* Header with back button */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={28} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Policy Details</Text>
-      </View>
-
       {/* Policy Card */}
       <View style={styles.card}>
         <Text style={styles.title}>{name}</Text>
@@ -46,26 +53,6 @@ export default function PolicyDetailsScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#f4f4f4", alignItems: "center" },
-
-  /* Header Styles */
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#007bff",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-  backButton: {
-    marginRight: 15,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-  },
 
   /* Card Styles */
   card: {

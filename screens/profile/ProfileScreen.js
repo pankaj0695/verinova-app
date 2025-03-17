@@ -88,28 +88,26 @@ const ProfileScreen = () => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Ionicons name="home-sharp" size={26} color={COLORS.black} />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="person" size={26} color={COLORS.primary} />
-          <Text style={styles.navText}>Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="settings" size={26} color={COLORS.black} />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}
-          onPress={() => navigation.navigate("AskQuery")}
-        >
-          <Ionicons name="videocam" size={26} color={COLORS.black} />
-          <Text style={styles.navText}>Ask Query</Text>
-        </TouchableOpacity>
-      </View>
+              <TouchableOpacity style={styles.navItem}
+              onPress={() => navigation.navigate("Home")}
+              >
+                <Ionicons name="home-sharp" size={26} color={COLORS.black} />
+                <Text style={styles.navText}>Home</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.navItem}
+              >
+                <Ionicons name="person" size={26} color={COLORS.primary} />
+                <Text style={styles.navText}>Profile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.navItem}
+                onPress={() => navigation.navigate("ServiceBot")}
+              >
+                <Ionicons name="chatbubbles" size={26} color={COLORS.black} />
+                <Text style={styles.navText}>Chatbot</Text>
+              </TouchableOpacity>
+            </View>
     </View>
   );
 };

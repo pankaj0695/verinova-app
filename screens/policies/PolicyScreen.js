@@ -6,45 +6,45 @@ import Ionicons from "react-native-vector-icons/Ionicons"; // Ensure Ionicons is
 const policies = [
   {
     id: 1,
-    name: "Privacy Policy",
-    description: "This policy outlines how we collect, use, store, and protect your personal information. It covers data security, sharing of information, and your rights regarding data privacy.",
-    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+    name: "Health Insurance Policy",
+    description:
+      "Our Health Insurance Policy provides financial coverage for medical expenses, including hospitalization, surgeries, and treatments. It also offers cashless treatment at partner hospitals.",
+    link: "https://www.unionbankofindia.co.in/en/health-insurance-policy",
   },
   {
     id: 2,
-    name: "Grievance Redressal Policy",
-    description: "Our Grievance Redressal Policy provides a framework to address customer complaints and service-related issues. It details response timelines, escalation levels, and resolution processes.",
-    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+    name: "Life Insurance Policy",
+    description:
+      "Secure your family's future with our Life Insurance Policy, offering financial protection in case of unfortunate events. Choose from term plans, whole life insurance, and endowment policies.",
+    link: "https://www.unionbankofindia.co.in/en/life-insurance-policy",
   },
   {
     id: 3,
-    name: "Terms and Conditions for Internet Banking",
-    description: "Learn about the terms, conditions, and security measures for using Union Bank's internet banking services, including login credentials, transaction limits, and fraud prevention guidelines.",
-    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+    name: "Home Insurance Policy",
+    description:
+      "Protect your home against natural disasters, fire, and theft with our Home Insurance Policy. It covers structural damages and loss of valuable belongings.",
+    link: "https://www.unionbankofindia.co.in/en/home-insurance-policy",
   },
   {
     id: 4,
-    name: "Anti-Money Laundering Policy",
-    description: "Union Bank follows strict anti-money laundering regulations to prevent illegal financial activities. This policy includes Know Your Customer (KYC) norms, transaction monitoring, and reporting obligations.",
-    link: "https://www.unionbankofindia.co.in/en/common/anti-money-laundering",
+    name: "Vehicle Insurance Policy",
+    description:
+      "Our Vehicle Insurance Policy ensures coverage against accidents, damages, and third-party liabilities. Choose from comprehensive or third-party plans.",
+    link: "https://www.unionbankofindia.co.in/en/vehicle-insurance-policy",
   },
   {
     id: 5,
-    name: "Deposit Policy",
-    description: "This policy explains the terms, interest rates, and operational guidelines for making deposits with Union Bank. It also covers premature withdrawal rules and nomination facilities.",
-    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+    name: "Travel Insurance Policy",
+    description:
+      "Enjoy a worry-free journey with our Travel Insurance Policy, covering trip cancellations, medical emergencies, lost baggage, and more.",
+    link: "https://www.unionbankofindia.co.in/en/travel-insurance-policy",
   },
   {
     id: 6,
-    name: "Compensation Policy",
-    description: "This policy details the circumstances under which customers are compensated for financial losses due to banking errors, service deficiencies, or system failures.",
-    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
-  },
-  {
-    id: 7,
-    name: "Customer Rights Policy",
-    description: "Our Customer Rights Policy defines fundamental rights, such as fair treatment, transparency, privacy, and grievance redressal mechanisms, ensuring ethical and responsible banking practices.",
-    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+    name: "Retirement Pension Policy",
+    description:
+      "Plan for a secure future with our Retirement Pension Policy, ensuring regular income post-retirement to maintain your lifestyle.",
+    link: "https://www.unionbankofindia.co.in/en/retirement-pension-policy",
   },
 ];
 
@@ -76,11 +76,13 @@ export default function PolicyScreen() {
             <Text style={styles.policyDescription}>{policy.description}</Text>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("PolicyDetailsScreen", { 
-                name: policy.name, 
-                description: policy.description, 
-                link: policy.link 
-              })}
+              onPress={() =>
+                navigation.navigate("PolicyDetailsScreen", {
+                  name: policy.name,
+                  description: policy.description,
+                  link: policy.link,
+                })
+              }
             >
               <Text style={styles.buttonText}>Visit</Text>
             </TouchableOpacity>
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    margin: 15,
+    // marginBottom: 10,
   },
   backButton: {
     marginRight: 10,
