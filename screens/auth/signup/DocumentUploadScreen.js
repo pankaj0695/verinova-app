@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import uploadFileToS3 from "../../../helper/helper";
 import { UserContext } from "../../../store/UserContext";
 import { COLORS } from "../../../constants/colors";
+import Checkbox from "expo-checkbox"; // Import checkbox
 
 export default function DocumentUploadScreen() {
   const navigation = useNavigation();
@@ -21,21 +22,31 @@ export default function DocumentUploadScreen() {
   const [panFile, setPanFile] = useState(null);
   const [selfie, setSelfie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
   const buttonScale = useRef(new Animated.Value(1)).current;
   const { setUserData } = useContext(UserContext);
 
   const handleNext = async () => {
+    if (!isChecked) {
+      Alert.alert("Agreement Required", "You must agree to the terms and conditions.");
+      return;
+    }
+
     setIsLoading(true);
-    if (aadharFile == null) {
-      Alert.alert("No Aadhar card selected", "Upload your aadhar card");
+
+    if (!aadharFile) {
+      Alert.alert("No Aadhar card selected", "Upload your Aadhar card");
+      setIsLoading(false);
       return;
     }
-    if (panFile == null) {
-      Alert.alert("No Pan card selected", "Upload your pan card");
+    if (!panFile) {
+      Alert.alert("No PAN card selected", "Upload your PAN card");
+      setIsLoading(false);
       return;
     }
-    if (selfie == null) {
+    if (!selfie) {
       Alert.alert("Invalid Selfie", "Upload your selfie");
+      setIsLoading(false);
       return;
     }
 
@@ -138,10 +149,38 @@ export default function DocumentUploadScreen() {
           )}
         </View>
 
+        {/* Terms and Conditions Checkbox */}
+        <View style={styles.checkboxContainer}>
+          <Checkbox
+            value={isChecked}
+            onValueChange={setIsChecked}
+            color={isChecked ? "#E2261C" : undefined}
+          />
+          <Text style={styles.checkboxText}>
+            I agree to the{" "}
+            <Text
+              style={styles.linkText}
+              onPress={() =>
+                Alert.alert(
+                  "Terms and Conditions",
+                  "1. The bank reserves the right to modify account policies at any time.\n\n" +
+                  "2. Customers must maintain a minimum balance as per the account type.\n\n" +
+                  "3. Transactions are subject to security checks and regulatory guidelines.\n\n" +
+                  "4. The bank is not responsible for unauthorized transactions due to customer negligence.\n\n" +
+                  "5. Interest rates on deposits are subject to change as per RBI regulations.",
+                  [{ text: "X", style: "cancel" }]
+                )
+              }
+                          >
+              Terms and Conditions
+            </Text>
+          </Text>
+        </View>
+
         <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
           <TouchableOpacity
-            disabled={isLoading}
-            style={styles.nextButton}
+            disabled={!isChecked || isLoading}
+            style={[styles.nextButton, (!isChecked || isLoading) && styles.disabledButton]}
             onPress={handleNext}
             onPressIn={animatePressIn}
             onPressOut={animatePressOut}
@@ -182,26 +221,34 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "100%",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
   },
   uploadText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
   fileName: { fontSize: 14, marginTop: 5, color: "#555" },
   imagePreview: { width: 100, height: 100, borderRadius: 8, marginTop: 10 },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  checkboxText: {
+    marginLeft: 10,
+    fontSize: 14,
+    color: "#444",
+  },
+  linkText: {
+    color: "#007bff",
+    textDecorationLine: "underline",
+  },
   nextButton: {
     backgroundColor: "#E2261C",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: 12,
     borderRadius: 10,
     width: "100%",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     marginTop: 10,
+  },
+  disabledButton: {
+    backgroundColor: "#ccc",
   },
   nextText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 });

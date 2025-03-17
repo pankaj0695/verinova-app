@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import for icons
 
 export default function PolicyDetailsScreen({ route }) {
-  const navigation = useNavigation();
+  const navigation = useNavigation();0.
   const { name, description, link } = route.params; // Extracting necessary params
 
   const openLink = async () => {

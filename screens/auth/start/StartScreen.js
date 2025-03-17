@@ -20,7 +20,6 @@ export default function StartScreen() {
   const buttonScale = useRef(new Animated.Value(1)).current;
   const { login, userData, isLoading } = useContext(UserContext);
 
-  // Refs for each PIN input
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
 
   useEffect(() => {
@@ -103,6 +102,43 @@ export default function StartScreen() {
     }
   };
 
+  const handleFaceAuthLogin = async () => {
+    const hasHardware = await LocalAuthentication.hasHardwareAsync();
+    const supported =
+      await LocalAuthentication.supportedAuthenticationTypesAsync();
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+    if (
+      !hasHardware ||
+      !supported.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)
+    ) {
+      Alert.alert(
+        "Error",
+        "Your device does not support facial recognition authentication."
+      );
+      return;
+    }
+
+    if (!isEnrolled) {
+      Alert.alert(
+        "Error",
+        "No facial recognition data is enrolled. Please set up Face ID in your device settings."
+      );
+      return;
+    }
+
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Authenticate with Face ID",
+      fallbackLabel: "Use MPIN",
+    });
+
+    if (result.success) {
+      navigation.replace("Home");
+    } else {
+      Alert.alert("Authentication Failed", "Please try again.");
+    }
+  };
+
   if (isLoading) {
     return (
       <View style={styles.container}>
@@ -151,13 +187,21 @@ export default function StartScreen() {
 
         <TouchableOpacity
           onPress={handleFingerprintLogin}
-          style={styles.fingerprintButton}
+          style={styles.authButton}
         >
           <Image
             source={require("../../../assets/images/fingerprint.png")}
-            style={styles.fingerprintIcon}
+            style={styles.authIcon}
           />
-          <Text style={styles.fingerprintText}>Use Fingerprint</Text>
+          <Text style={styles.authText}>Use Fingerprint</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleFaceAuthLogin} style={styles.authButton}>
+          <Image
+            source={require("../../../assets/images/face-recognition.jpg")}
+            style={styles.authIcon}
+          />
+          <Text style={styles.authText}>Use Facial Auth</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -213,24 +257,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loginText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
-  fingerprintButton: {
+  authButton: {
     flexDirection: "row",
     alignItems: "center",
     padding: 12,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ccc",
-    marginBottom: 20,
+    marginBottom: 15,
   },
-  fingerprintIcon: {
+  authIcon: {
     width: 30,
     height: 30,
     marginRight: 10,
   },
-  fingerprintText: {
+  authText: {
     fontSize: 16,
     color: "#007bff",
   },
-  signupText: { color: "#007bff", fontSize: 16, marginTop: 20 },
-  loadingText: { fontSize: 18, fontWeight: "bold", color: "#333" },
 });
+
