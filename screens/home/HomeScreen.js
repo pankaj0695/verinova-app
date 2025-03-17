@@ -39,14 +39,14 @@ export default function HomeScreen() {
       id: "1",
       title: "Customer Service",
       icon: "headset-outline",
-      screen: "CustomerService",
+      screen: "CustomerServiceScreen", // Ensure this matches the registered screen name
       gradient: ["#FF806D", "#FF345D"],
     },
     {
       id: "2",
       title: "Loan",
       icon: "cash-outline",
-      screen: "Loan",
+      screen: "Loan", // Ensure this matches the registered screen name for LoanScreen
       gradient: ["#EF3AFF", "#5822BB"],
     },
     {
@@ -68,7 +68,7 @@ export default function HomeScreen() {
       title: "Accounts",
       icon: "document-text-outline",
       screen: "AccountType",
-      gradient: ["#11FF11", "#0BAB64" ],
+      gradient: ["#11FF11", "#0BAB64"],
     },
     {
       id: "6",
@@ -187,7 +187,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={index}
               style={styles.taskBox}
-              onPress={() => navigation.navigate(task.screen)}
+              onPress={() => navigation.navigate(task.screen)} // Navigate to CustomerServiceScreen
             >
               <LinearGradient
                 colors={task.gradient}

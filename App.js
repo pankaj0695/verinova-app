@@ -21,7 +21,9 @@ import PolicyDetailsScreen from "./screens/policies/PolicyDetailsScreen";
 import FAQ from "./screens/faq/FAQ";
 import OtpVerificationScreen from "./screens/auth/signup/OtpVerificationScreen";
 import TrackQueriesScreen from "./screens/profile/TrackQueries";
-import AccountType from "./screens/accounts/AccountType"; 
+import AccountType from "./screens/accounts/AccountType";
+import CustomerServiceScreen from "./screens/home/CustomerServiceScreen";
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -30,32 +32,20 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Start" component={StartScreen} />
-          <Stack.Screen
-            options={{ animation: "none" }}
-            name="Home"
-            component={HomeScreen}
-          />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignupMobile" component={SignupMobileScreen} />
-          <Stack.Screen
-            name="PersonalDetails"
-            component={PersonalDetailsScreen}
-          />
-          <Stack.Screen
-            name="DocumentUpload"
-            component={DocumentUploadScreen}
-          />
+          <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
+          <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} />
           <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
-          <Stack.Screen
-            name="OtpVerification"
-            component={OtpVerificationScreen}
-          />
+          <Stack.Screen name="OtpVerification" component={OtpVerificationScreen} />
 
           {/* Profile & Services */}
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="TrackQueries" component={TrackQueriesScreen} />
           <Stack.Screen name="AskQuery" component={AskQueryScreen} />
           <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
+   
 
           {/* Loan Screens */}
           <Stack.Screen name="Loan" component={LoanScreen} />
@@ -67,8 +57,9 @@ export default function App() {
           <Stack.Screen name="Policies" component={PolicyScreen} />
           <Stack.Screen name="Faq" component={FAQ} />
           <Stack.Screen name="AccountType" component={AccountType} />
+          <Stack.Screen name="CustomerServiceScreen" component={CustomerServiceScreen} />
 
-          {/* Policy Details (Ensure it's correctly named when navigating) */}
+          {/* Policy Details */}
           <Stack.Screen
             name="PolicyDetailsScreen"
             component={PolicyDetailsScreen}

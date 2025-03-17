@@ -4,13 +4,48 @@ import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Ensure Ionicons is imported
 
 const policies = [
-  { id: 1, name: "Privacy Policy", description: "This policy outlines how we collect, use, and protect your personal information.", link: "https://www.unionbankofindia.co.in/en/common/privacy-policy" },
-  { id: 2, name: "Grievance Redressal Policy", description: "This policy provides a framework for addressing customer complaints and grievances.", link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal" },
-  { id: 3, name: "Terms and Conditions for Internet Banking", description: "Learn about the terms and conditions for using Union Bank's internet banking services.", link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal" },
-  { id: 4, name: "Anti-Money Laundering Policy", description: "This policy outlines Union Bank's approach to preventing money laundering.", link: "https://www.unionbankofindia.co.in/en/common/anti-money-laundering" },
-  { id: 5, name: "Deposit Policy", description: "This policy explains the terms and conditions for making deposits with Union Bank.", link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal" },
-  { id: 6, name: "Compensation Policy", description: "Outlines how the bank compensates customers for financial losses due to errors or deficiencies in service.", link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures" },
-  { id: 7, name: "Customer Rights Policy", description: "Defines the basic rights of bank customers, emphasizing fair and honest dealings.", link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures" },
+  {
+    id: 1,
+    name: "Privacy Policy",
+    description: "This policy outlines how we collect, use, store, and protect your personal information. It covers data security, sharing of information, and your rights regarding data privacy.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+  },
+  {
+    id: 2,
+    name: "Grievance Redressal Policy",
+    description: "Our Grievance Redressal Policy provides a framework to address customer complaints and service-related issues. It details response timelines, escalation levels, and resolution processes.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+  },
+  {
+    id: 3,
+    name: "Terms and Conditions for Internet Banking",
+    description: "Learn about the terms, conditions, and security measures for using Union Bank's internet banking services, including login credentials, transaction limits, and fraud prevention guidelines.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+  },
+  {
+    id: 4,
+    name: "Anti-Money Laundering Policy",
+    description: "Union Bank follows strict anti-money laundering regulations to prevent illegal financial activities. This policy includes Know Your Customer (KYC) norms, transaction monitoring, and reporting obligations.",
+    link: "https://www.unionbankofindia.co.in/en/common/anti-money-laundering",
+  },
+  {
+    id: 5,
+    name: "Deposit Policy",
+    description: "This policy explains the terms, interest rates, and operational guidelines for making deposits with Union Bank. It also covers premature withdrawal rules and nomination facilities.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+  },
+  {
+    id: 6,
+    name: "Compensation Policy",
+    description: "This policy details the circumstances under which customers are compensated for financial losses due to banking errors, service deficiencies, or system failures.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+  },
+  {
+    id: 7,
+    name: "Customer Rights Policy",
+    description: "Our Customer Rights Policy defines fundamental rights, such as fair treatment, transparency, privacy, and grievance redressal mechanisms, ensuring ethical and responsible banking practices.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+  },
 ];
 
 const AnimatedCard = ({ children }) => {
@@ -46,7 +81,6 @@ export default function PolicyScreen() {
                 description: policy.description, 
                 link: policy.link 
               })}
-              
             >
               <Text style={styles.buttonText}>Visit</Text>
             </TouchableOpacity>
@@ -66,18 +100,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginRight: 10,
-    paddingTop:"30",
-
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#333",
-    
-    paddingTop:"30",
-    paddingLeft:"90",
-
     flex: 1,
+    textAlign: "center",
   },
   policiesContainer: { flex: 1, marginTop: 10 },
   card: {
