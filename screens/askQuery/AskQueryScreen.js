@@ -163,15 +163,15 @@ const AskQueryScreen = () => {
 
   return (
     <View style={styles.container}>
-        <View style={styles.topBar}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Ionicons name="arrow-back" size={28} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.topBarTitle}>Ask a Query</Text>
-        </View>
+      <View style={styles.topBar}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
+          <Ionicons name="arrow-back" size={28} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.topBarTitle}>Ask a Query</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Top Bar with Back Button */}
 
@@ -310,7 +310,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#ddd",
     backgroundColor: "#f8f8f8",
-
   },
   backButton: {
     position: "absolute",
@@ -333,7 +332,7 @@ const styles = StyleSheet.create({
     color: COLORS.subText,
     marginBottom: 20,
     textAlign: "center",
-    paddingVertical: 30
+    paddingVertical: 30,
   },
   card: {
     backgroundColor: COLORS.white,
@@ -349,11 +348,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   cardTitle: {
-    fontSize: 18,  
+    fontSize: 18,
     fontWeight: "bold",
     color: COLORS.black,
     marginBottom: 15,
-    padding: 10
+    padding: 10,
   },
   button: {
     padding: 12,
