@@ -175,7 +175,6 @@ const AskQueryScreen = () => {
           <Text style={styles.topBarTitle}>Ask a Query</Text>
         </View>
 
-        <Text style={styles.heading}>Ask a Query</Text>
         <Text style={styles.subHeading}>
           Toggle between audio and video to record your query.
         </Text>
@@ -305,10 +304,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    paddingVertical: 12,
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderColor: "#ddd",
     backgroundColor: "#f8f8f8",
+
   },
   backButton: {
     position: "absolute",
@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
     color: COLORS.subText,
     marginBottom: 20,
     textAlign: "center",
+    paddingVertical: 30
   },
   card: {
     backgroundColor: COLORS.white,
@@ -349,6 +350,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.black,
     marginBottom: 15,
+    padding: 10
   },
   button: {
     padding: 12,

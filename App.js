@@ -21,7 +21,7 @@ import PolicyDetailsScreen from "./screens/policies/PolicyDetailsScreen";
 import FAQ from "./screens/faq/FAQ";
 import OtpVerificationScreen from "./screens/auth/signup/OtpVerificationScreen";
 import TrackQueriesScreen from "./screens/profile/TrackQueries";
-import TrackQueries from "./screens/profile/TrackQueries";
+import AccountType from "./screens/accounts/AccountType"; 
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -66,6 +66,7 @@ export default function App() {
           {/* Policies & FAQs */}
           <Stack.Screen name="Policies" component={PolicyScreen} />
           <Stack.Screen name="Faq" component={FAQ} />
+          <Stack.Screen name="AccountType" component={AccountType} />
 
           {/* Policy Details (Ensure it's correctly named when navigating) */}
           <Stack.Screen

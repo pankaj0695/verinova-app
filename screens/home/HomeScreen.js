@@ -65,17 +65,17 @@ export default function HomeScreen() {
     },
     {
       id: "5",
+      title: "Accounts",
+      icon: "document-text-outline",
+      screen: "AccountType",
+      gradient: ["#11FF11", "#0BAB64" ],
+    },
+    {
+      id: "6",
       title: "FAQ",
       icon: "document",
       screen: "Faq",
       gradient: ["#11FFEF", "#03119F"],
-    },
-    {
-      id: "6",
-      title: "Accounts",
-      icon: "document-text-outline",
-      screen: "Faq",
-      gradient: ["#11FF11", "#0BAB64" ],
     },
   ];
 
