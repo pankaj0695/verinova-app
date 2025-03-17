@@ -51,7 +51,7 @@ export default function HomeScreen() {
     },
     {
       id: "3",
-      title: "Withdrawal",
+      title: "Funds Transfer",
       icon: "card-outline",
       screen: "Withdrawal",
       gradient: ["#4DF9FF", "#1280C4"],
@@ -69,6 +69,13 @@ export default function HomeScreen() {
       icon: "document",
       screen: "Faq",
       gradient: ["#11FFEF", "#03119F"],
+    },
+    {
+      id: "6",
+      title: "Accounts",
+      icon: "document-text-outline",
+      screen: "Faq",
+      gradient: ["#11FF11", "#0BAB64" ],
     },
   ];
 
@@ -105,19 +112,11 @@ export default function HomeScreen() {
     return () => clearInterval(interval);
   }, [isScrolling]);
 
-  const handleOpenDrawer = () => {
-    if (navigation && navigation.openDrawer) {
-      navigation.openDrawer();
-    } else {
-      console.error("DrawerNavigator is not properly configured.");
-    }
-  };
-
   return (
     <View style={styles.container}>
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={handleOpenDrawer} style={styles.menuButton}>
+        <TouchableOpacity>
           <Ionicons name="menu" size={28} color={COLORS.black} />
         </TouchableOpacity>
         <View style={styles.logoContainer}>
@@ -205,7 +204,6 @@ export default function HomeScreen() {
         <Animated.View
           style={[
             styles.chatbotIcon,
-            { transform: [{ translateY: floatAnim }] },
           ]}
         >
           <TouchableOpacity onPress={() => navigation.navigate("ServiceBot")}>
@@ -379,9 +377,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     color: COLORS.black,
-  },
-  menuButton: {
-    marginRight: 10,
-    padding: 5, // Ensure proper touch area
   },
 });

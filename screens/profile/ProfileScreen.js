@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import SubscriptionScreen from "./SubscriptionScreen";
 import TrackQueriesScreen from "./TrackQueries";
 import {
   View,
@@ -71,19 +70,6 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        {/* Subscription Box */}
-        <View style={styles.subscriptionBox}>
-          <Text style={styles.subscriptionTitle}>Premium Subscription</Text>
-          <Text style={styles.subscriptionDescription}>
-            Unlock exclusive benefits and enjoy priority support.
-          </Text>
-          <TouchableOpacity
-            style={styles.subscribeButton}
-            onPress={() => navigation.navigate('SubscriptionScreen')}
-          >
-            <Text style={styles.subscribeButtonText}>Subscribe Now!!</Text>
-          </TouchableOpacity>
-        </View>
 
         {/* Add Track Queries Button */}
         <TouchableOpacity
@@ -117,7 +103,9 @@ const ProfileScreen = () => {
           <Ionicons name="settings" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Settings</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem}
+          onPress={() => navigation.navigate("AskQuery")}
+        >
           <Ionicons name="videocam" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Ask Query</Text>
         </TouchableOpacity>
@@ -210,6 +198,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 20,
     elevation: 5, // Floating effect
+    margin: 10,
     position: "absolute",
     bottom: 0,
     left: 10,

@@ -68,7 +68,7 @@ export default function WithdrawalScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Withdrawal History</Text>
+      <Text style={styles.title}>Funds Transfer</Text>
       <View style={styles.cardContainer}>
         {withdrawals.map((withdrawal) => (
           <TouchableOpacity
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     marginVertical: 20,
+    paddingVertical:15,
     textAlign: "center",
   },
   cardContainer: {
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 8,
     padding: 15,
-    marginBottom: 10,
+    marginBottom: 18,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
