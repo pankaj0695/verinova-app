@@ -148,7 +148,6 @@ const AskQueryScreen = () => {
 
     console.log("Uploaded file URL:", fileUrl);
 
-    const ticketId = `TICKET-${Date.now()}`;
     Alert.alert(
       "Thank You",
       "Your query has been submitted successfully!",
