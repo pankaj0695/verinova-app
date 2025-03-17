@@ -127,6 +127,13 @@ const LoanScreen = () => {
                   </Text>
                 ))}
               </View>
+              {/* Add "Apply Now" button */}
+              <TouchableOpacity
+                style={styles.applyButton}
+                onPress={() => alert(`Applying for ${selectedLoan.type}`)}
+              >
+                <Text style={styles.applyButtonText}>Apply Now</Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.backButton}
@@ -264,6 +271,19 @@ const styles = StyleSheet.create({
     color: "#333"
   },
   buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+  applyButton: {
+    backgroundColor: "#007bff",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 20,
+    width: "100%"
+  },
+  applyButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold"
