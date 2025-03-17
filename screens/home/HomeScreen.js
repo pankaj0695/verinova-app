@@ -201,7 +201,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Floating Chatbot */}
-        <Animated.View
+        {/* <Animated.View
           style={[
             styles.chatbotIcon,
           ]}
@@ -209,7 +209,7 @@ export default function HomeScreen() {
           <TouchableOpacity onPress={() => navigation.navigate("ServiceBot")}>
             <Ionicons name="chatbubbles" size={24} color={COLORS.white} />
           </TouchableOpacity>
-        </Animated.View>
+        </Animated.View> */}
       </ScrollView>
 
       {/* Bottom Navigation */}
@@ -225,16 +225,12 @@ export default function HomeScreen() {
           <Ionicons name="person" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="settings" size={26} color={COLORS.black} />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("AskQuery")}
+          onPress={() => navigation.navigate("ServiceBot")}
         >
-          <Ionicons name="videocam" size={26} color={COLORS.black} />
-          <Text style={styles.navText}>Ask Query</Text>
+          <Ionicons name="chatbubbles" size={26} color={COLORS.black} />
+          <Text style={styles.navText}>Chatbot</Text>
         </TouchableOpacity>
       </View>
     </View>

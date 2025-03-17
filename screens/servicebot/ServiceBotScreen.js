@@ -7,25 +7,22 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import * as DocumentPicker from "expo-document-picker"; // Updated package
-import { Ionicons } from "@expo/vector-icons"; // Icons
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ServiceBotScreen() {
   const navigation = useNavigation();
-
-  // State to store chat messages
+  
   const [messages, setMessages] = useState([
     { id: "1", text: "Hi, I am Vyom’s AI service Bot", sender: "bot" },
     {
       id: "2",
-      text: "Please upload a video of yourself explaining how I can help you...",
+      text: "Please describe how I can help you...",
       sender: "bot",
     },
   ]);
   const [inputText, setInputText] = useState("");
 
-  // Handle user message submission
   const handleSendMessage = () => {
     if (inputText.trim() === "") return;
 
@@ -36,41 +33,26 @@ export default function ServiceBotScreen() {
     };
 
     setMessages([...messages, newMessage]);
-    setInputText(""); // Clear input after sending
-  };
-
-  // Handle video upload
-  const handleUploadVideo = async () => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "video/*",
-      });
-
-      if (result.type === "success") {
-        const newMessage = {
-          id: Math.random().toString(),
-          text: "📹 Video uploaded: " + result.name,
-          sender: "user",
-        };
-
-        setMessages([...messages, newMessage]);
-      }
-    } catch (error) {
-      console.error("Document selection error:", error);
-    }
+    setInputText("");
   };
 
   return (
     <View style={styles.container}>
-      {/* Top Bar */}
+      {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <Text style={styles.topBarText}>Customer Service Bot</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="close" size={24} color="black" />
+        {/* Back Button on Left */}
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
+
+        {/* Chatbot Title in Center */}
+        <Text style={styles.topBarText}>Chatbot</Text>
+        
+        {/* Empty View to Keep Title Centered */}
+        <View style={{ width: 24 }} />
       </View>
 
-      {/* Chat Area */}
+      {/* Chat Messages */}
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
@@ -98,13 +80,16 @@ export default function ServiceBotScreen() {
         <TouchableOpacity onPress={handleSendMessage} style={styles.sendButton}>
           <Ionicons name="send" size={20} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleUploadVideo}
-          style={styles.uploadButton}
-        >
-          <Ionicons name="cloud-upload" size={20} color="black" />
-        </TouchableOpacity>
       </View>
+
+      {/* Ask Query Button */}
+      <TouchableOpacity
+        style={styles.askQueryButton}
+        onPress={() => navigation.navigate("AskQuery")}
+      >
+        <Ionicons name="videocam" size={26} color="white" />
+        <Text style={styles.askQueryText}>Ask Query</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -119,18 +104,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
+    paddingVertical: 25, // Moved down
+    paddingHorizontal: 16,
     backgroundColor: "#EAEAEA",
     borderBottomWidth: 1,
     borderColor: "#CCC",
   },
+  backButton: {
+    padding: 5,
+  },
   topBarText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
+    flex: 1, // Makes title centered
   },
   chatArea: {
     flex: 1,
-    padding: 10,
+    padding: 1,
   },
   messageBubble: {
     padding: 10,
@@ -170,8 +161,21 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 8,
   },
-  uploadButton: {
-    marginLeft: 10,
-    padding: 8,
+  askQueryButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    borderRadius: 25,
+    marginHorizontal: 16,
+    marginBottom: 20,
+  },
+  askQueryText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
+    marginLeft: 8,
   },
 });
+
