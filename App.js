@@ -20,6 +20,7 @@ import PolicyScreen from "./screens/policies/PolicyScreen";
 import PolicyDetailsScreen from "./screens/policies/PolicyDetailsScreen";
 import FAQ from "./screens/faq/FAQ";
 import OtpVerificationScreen from "./screens/auth/signup/OtpVerificationScreen";
+import TrackQueriesScreen from "./screens/profile/TrackQueries";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,8 @@ export default function App() {
 
           {/* Profile & Services */}
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="TrackQueries" component={TrackQueriesScreen} />
+          <Stack.Screen name="AskQuery" component={AskQueryScreen} />
           <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
 
           {/* Loan Screens */}

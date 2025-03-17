@@ -131,9 +131,7 @@ export default function HomeScreen() {
       {/* Main Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Welcome Section */}
-        <Text style={styles.greeting}>
-          Hii User{userData.name.split(" ")[0]}
-        </Text>
+        <Text style={styles.greeting}>Hii {userData.name.split(" ")[0]}</Text>
         <TextInput
           style={styles.searchBox}
           placeholder="Search"
