@@ -163,8 +163,6 @@ const AskQueryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Top Bar with Back Button */}
         <View style={styles.topBar}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -174,6 +172,8 @@ const AskQueryScreen = () => {
           </TouchableOpacity>
           <Text style={styles.topBarTitle}>Ask a Query</Text>
         </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Top Bar with Back Button */}
 
         <Text style={styles.subHeading}>
           Toggle between audio and video to record your query.
@@ -293,6 +293,7 @@ const AskQueryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%", // Ensures full width
     backgroundColor: COLORS.background,
   },
   scrollContainer: {
@@ -304,6 +305,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    paddingTop: 30,
     paddingVertical: 20,
     borderBottomWidth: 1,
     borderColor: "#ddd",
@@ -312,6 +314,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
+    paddingTop: 10,
     left: 16,
   },
   topBarTitle: {
@@ -346,7 +349,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 18,  
     fontWeight: "bold",
     color: COLORS.black,
     marginBottom: 15,
