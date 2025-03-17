@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../store/UserContext";
 import { COLORS } from "../../../constants/colors";
 import axios from "axios";
+import { ipAddress } from "../../../helper/helper";
 
 export default function OtpVerificationScreen() {
   const navigation = useNavigation();
@@ -21,13 +22,10 @@ export default function OtpVerificationScreen() {
 
   const verifyOTP = async () => {
     try {
-      const response = await axios.post(
-        "http://192.168.220.118:4000/verify-otp",
-        {
-          email: userData.email,
-          otp: +otp,
-        }
-      );
+      const response = await axios.post(`http://${ipAddress}:4000/verify-otp`, {
+        email: userData.email,
+        otp: +otp,
+      });
       if (response.status === 200) navigation.navigate("PersonalDetails");
       else Alert.alert("Invalid OTP", "Please enter the correct OTP.");
     } catch (error) {

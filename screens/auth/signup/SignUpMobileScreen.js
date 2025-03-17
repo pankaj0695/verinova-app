@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../store/UserContext";
 import { COLORS } from "../../../constants/colors";
 import axios from "axios";
+import { ipAddress } from "../../../helper/helper";
 
 export default function SignupMobileScreen() {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ export default function SignupMobileScreen() {
       return;
     }
     setUserData({ email, mobile });
-    await axios.post("http://192.168.220.118:4000/generate-otp", { email });
+    await axios.post(`http://${ipAddress}:4000/generate-otp`, { email });
     navigation.navigate("OtpVerification");
   };
 
