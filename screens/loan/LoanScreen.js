@@ -1,174 +1,273 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
+import { useNavigation } from "@react-navigation/native"; // Import navigation hook
 
-export default function LoanScreen() {
-  const navigation = useNavigation();
-  const screenWidth = Dimensions.get("window").width; // Get the screen width
+const LoanScreen = () => {
+  const [selectedLoan, setSelectedLoan] = useState(null);
+  const navigation = useNavigation(); // Initialize navigation
 
-  const loanCategories = [
+  const loanDetails = [
     {
-      id: "1",
-      name: "Home Loan",
-      icon: "home",
-      description:
-        "Get easy home loans at low interest rates. Flexible tenure up to 30 years.",
-      color: ["#FF9A8B", "#FF6A88"],
+      type: "Home Loan",
+      description: "Finance your dream home with flexible repayment options.",
+      features: [
+        "Low interest rates",
+        "Flexible tenure up to 30 years",
+        "Tax benefits on principal and interest"
+      ],
+      requirements: [
+        "Identity proof",
+        "Address proof",
+        "Income proof",
+        "Property documents"
+      ],
+      image: require("../../assets/images/homeloan.png")
     },
     {
-      id: "2",
-      name: "Car Loan",
-      icon: "car",
-      description:
-        "Drive your dream car with our car loan options. Quick approval and low EMIs.",
-      color: ["#42E695", "#3BB2B8"],
+      type: "Personal Loan",
+      description: "Quick and easy loans for your personal needs.",
+      features: [
+        "No collateral required",
+        "Quick disbursal",
+        "Flexible repayment options"
+      ],
+      requirements: [
+        "Identity proof",
+        "Address proof",
+        "Income proof",
+        "Bank statements"
+      ],
+      image: require("../../assets/images/personalloan.png")
     },
     {
-      id: "3",
-      name: "Personal Loan",
-      icon: "user",
-      description:
-        "Quick and hassle-free personal loans for your needs. No collateral required.",
-      color: ["#FAD961", "#F76B1C"],
+      type: "Car Loan",
+      description: "Drive your dream car with our affordable car loans.",
+      features: [
+        "Low interest rates",
+        "Flexible repayment tenure",
+        "Quick processing"
+      ],
+      requirements: [
+        "Identity proof",
+        "Address proof",
+        "Income proof",
+        "Car quotation"
+      ],
+      image: require("../../assets/images/carloan.png")
     },
     {
-      id: "4",
-      name: "Business Loan",
-      icon: "chart-line",
-      description:
-        "Expand your business with our flexible loan plans. High loan amounts available.",
-      color: ["#A18CD1", "#FBC2EB"],
-    },
-    {
-      id: "5",
-      name: "Educational Loan",
-      icon: "book-open",
-      description:
-        "Finance your education with our affordable loan options. Low-interest rates available.",
-      color: ["#6DD5FA", "#FFFFFF"],
-    },
+      type: "Education Loan",
+      description: "Invest in your future with our education loans.",
+      features: [
+        "Covers tuition and living expenses",
+        "Flexible repayment options",
+        "Low interest rates"
+      ],
+      requirements: [
+        "Identity proof",
+        "Address proof",
+        "Admission letter",
+        "Income proof of co-borrower"
+      ],
+      image: require("../../assets/images/educationloan.png")
+    }
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {/* Header */}
-      <View style={styles.topBar}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={28} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.topBarTitle}>Loan Categories</Text>
-      </View>
-
-      {/* Title */}
-      <Text style={styles.title}>Choose Your Loan Type</Text>
-
-      {/* Loan Categories List */}
-      <View style={styles.grid}>
-        {loanCategories.map((category) => (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Header with Back Button */}
+        <View style={styles.topBar}>
           <TouchableOpacity
-            key={category.id}
-            style={[styles.loanBox, { width: screenWidth * 0.9 }]}
-            onPress={() =>
-              navigation.navigate("LoanCategory", { category: category.name })
-            }
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
           >
-            <View style={styles.iconContainer}>
-              <FontAwesome5 name={category.icon} size={28} color="white" />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={styles.loanText}>{category.name}</Text>
-              <Text style={styles.loanDescription}>{category.description}</Text>
-            </View>
+            <Ionicons name="arrow-back" size={28} color="black" />
           </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
+          <Text style={styles.topBarTitle}>Loan Types</Text>
+        </View>
+
+        {!selectedLoan ? (
+          <>
+            <Text style={styles.title}>Choose a Loan Type</Text>
+            {loanDetails.map((loan, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.card}
+                onPress={() => setSelectedLoan(loan)}
+              >
+                <Image source={loan.image} style={styles.cardImage} />
+                <View style={styles.cardContent}>
+                  <Text style={styles.cardTitle}>{loan.type}</Text>
+                  <Text style={styles.cardDescription}>{loan.description}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </>
+        ) : (
+          <>
+            <View style={styles.detailsBox}>
+              <Image source={selectedLoan.image} style={styles.detailsImage} />
+              <Text style={styles.detailsTitle}>{selectedLoan.type}</Text>
+              <Text style={styles.detailsDescription}>{selectedLoan.description}</Text>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoTitle}>Features:</Text>
+                {selectedLoan.features.map((feature, index) => (
+                  <Text key={index} style={styles.infoText}>
+                    • {feature}
+                  </Text>
+                ))}
+              </View>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoTitle}>Requirements:</Text>
+                {selectedLoan.requirements.map((requirement, index) => (
+                  <Text key={index} style={styles.infoText}>
+                    • {requirement}
+                  </Text>
+                ))}
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => setSelectedLoan(null)}
+            >
+              <Text style={styles.buttonText}>Go Back</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </ScrollView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f9fa",
+    padding: 20
+  },
   scrollContainer: {
-    alignItems: "center",
-    backgroundColor: "#f8f8f8",
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   topBar: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-    elevation: 2,
+    marginBottom: 20
   },
   backButton: {
-    position: "absolute",
-    paddingTop: 30,
-    left: 16,
+    marginRight: 10
   },
   topBarTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
-    paddingTop: 30,
-    color: "black",
+    color: "#333"
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "black",
-    marginVertical: 20,
+    marginBottom: 20,
     textAlign: "center",
+    color: "#333"
   },
-  grid: {
-    width: "100%",
-    alignItems: "center",
-  },
-  loanBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 15,
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
     marginVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
-  },
-  iconContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#007bff",
+    width: "90%",
     alignItems: "center",
-    justifyContent: "center",
-    marginRight: 15,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    overflow: "hidden"
   },
-  textContainer: {
-    flex: 1,
+  cardImage: {
+    width: "100%",
+    height: 150,
+    resizeMode: "cover"
   },
-  loanText: {
+  cardContent: {
+    padding: 15,
+    alignItems: "center"
+  },
+  cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
+    marginBottom: 5
   },
-  loanDescription: {
+  cardDescription: {
     fontSize: 14,
-    color: "#555",
-    marginTop: 4,
+    color: "#666",
+    textAlign: "center"
   },
+  detailsBox: {
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    padding: 20,
+    width: "90%",
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3
+  },
+  detailsImage: {
+    width: "100%",
+    height: 200,
+    resizeMode: "contain",
+    marginBottom: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd"
+  },
+  detailsTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 10,
+    textAlign: "center"
+  },
+  detailsDescription: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 20
+  },
+  infoBox: {
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    padding: 15,
+    width: "100%",
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: "#ccc"
+  },
+  infoTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 10,
+    textAlign: "center"
+  },
+  infoText: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: "#333"
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold"
+  }
 });
+
+export default LoanScreen;
