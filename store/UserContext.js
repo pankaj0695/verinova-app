@@ -58,11 +58,12 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const signup = async () => {
-    const response = await axios.post(
-      `http://${ipAddress}:4000/signup`,
-      userData
-    );
+  const signup = async ({ mpin, fingerprint }) => {
+    const response = await axios.post(`http://${ipAddress}:4000/signup`, {
+      ...userData,
+      mpin,
+      fingerprint,
+    });
     if (response.status === 200) {
       return true;
     } else {

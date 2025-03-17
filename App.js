@@ -30,12 +30,12 @@ export default function App() {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen
             options={{ animation: "none" }}
             name="Home"
             component={HomeScreen}
           />
-          <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignupMobile" component={SignupMobileScreen} />
           <Stack.Screen
@@ -47,6 +47,10 @@ export default function App() {
             component={DocumentUploadScreen}
           />
           <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
+          <Stack.Screen
+            name="OtpVerification"
+            component={OtpVerificationScreen}
+          />
 
           {/* Profile & Services */}
           <Stack.Screen name="Profile" component={ProfileScreen} />

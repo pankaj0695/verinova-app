@@ -71,8 +71,7 @@ export default function MpinSetupScreen() {
       Alert.alert("Error", "MPIN and Confirm MPIN do not match!");
       return;
     }
-    setUserData({ mpin: mpinStr, fingerprint });
-    const res = await signup();
+    const res = await signup({ mpin: mpinStr, fingerprint });
     if (res) {
       navigation.navigate("Start");
     } else {

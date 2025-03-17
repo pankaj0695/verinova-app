@@ -39,8 +39,8 @@ export default function SignupMobileScreen() {
       return;
     }
     setUserData({ email, mobile });
-    await axios.post(`http://${ipAddress}:4000/generate-otp`, { email });
-    navigation.navigate("OtpVerification");
+    // await axios.post(`http://${ipAddress}:4000/generate-otp`, { email });
+    navigation.navigate("PersonalDetails");
   };
 
   return (
