@@ -14,6 +14,7 @@ export default function PolicyDetailsScreen({ route }) {
     );
   };
 
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{name}</Text>

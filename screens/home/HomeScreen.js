@@ -105,11 +105,19 @@ export default function HomeScreen() {
     return () => clearInterval(interval);
   }, [isScrolling]);
 
+  const handleOpenDrawer = () => {
+    if (navigation && navigation.openDrawer) {
+      navigation.openDrawer();
+    } else {
+      console.error("DrawerNavigator is not properly configured.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleOpenDrawer} style={styles.menuButton}>
           <Ionicons name="menu" size={28} color={COLORS.black} />
         </TouchableOpacity>
         <View style={styles.logoContainer}>
@@ -371,5 +379,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     color: COLORS.black,
+  },
+  menuButton: {
+    marginRight: 10,
+    padding: 5, // Ensure proper touch area
   },
 });

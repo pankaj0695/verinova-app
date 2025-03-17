@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons"; // Ensure Ionicons is imported
 
 const policies = [
   { id: 1, name: "Privacy Policy", description: "This policy outlines how we collect, use, and protect your personal information.", link: "https://www.unionbankofindia.co.in/en/common/privacy-policy" },
@@ -27,7 +28,12 @@ export default function PolicyScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Policies</Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={28} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Policies</Text>
+      </View>
       <View style={styles.policiesContainer}>
         {policies.map((policy) => (
           <AnimatedCard key={policy.id}>
@@ -53,7 +59,26 @@ export default function PolicyScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: "#f8f8f8" },
-  title: { fontSize: 24, fontWeight: "bold", color: "#333", textAlign: "center", marginVertical: 20 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  backButton: {
+    marginRight: 10,
+    paddingTop:"30",
+
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    
+    paddingTop:"30",
+    paddingLeft:"90",
+
+    flex: 1,
+  },
   policiesContainer: { flex: 1, marginTop: 10 },
   card: {
     backgroundColor: "white",
