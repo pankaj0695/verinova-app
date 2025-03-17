@@ -1,50 +1,64 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Ensure Ionicons is imported
 
 const policies = [
   {
     id: 1,
-    name: "Health Insurance Policy",
+    name: "Privacy Policy",
     description:
-      "Our Health Insurance Policy provides financial coverage for medical expenses, including hospitalization, surgeries, and treatments. It also offers cashless treatment at partner hospitals.",
-    link: "https://www.unionbankofindia.co.in/en/health-insurance-policy",
+      "This policy outlines how we collect, use, store, and protect your personal information. It covers data security, sharing of information, and your rights regarding data privacy.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
   },
   {
     id: 2,
-    name: "Life Insurance Policy",
+    name: "Grievance Redressal Policy",
     description:
-      "Secure your family's future with our Life Insurance Policy, offering financial protection in case of unfortunate events. Choose from term plans, whole life insurance, and endowment policies.",
-    link: "https://www.unionbankofindia.co.in/en/life-insurance-policy",
+      "Our Grievance Redressal Policy provides a framework to address customer complaints and service-related issues. It details response timelines, escalation levels, and resolution processes.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
   },
   {
     id: 3,
-    name: "Home Insurance Policy",
+    name: "Terms and Conditions for Internet Banking",
     description:
-      "Protect your home against natural disasters, fire, and theft with our Home Insurance Policy. It covers structural damages and loss of valuable belongings.",
-    link: "https://www.unionbankofindia.co.in/en/home-insurance-policy",
+      "Learn about the terms, conditions, and security measures for using Union Bank's internet banking services, including login credentials, transaction limits, and fraud prevention guidelines.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
   },
   {
     id: 4,
-    name: "Vehicle Insurance Policy",
+    name: "Anti-Money Laundering Policy",
     description:
-      "Our Vehicle Insurance Policy ensures coverage against accidents, damages, and third-party liabilities. Choose from comprehensive or third-party plans.",
-    link: "https://www.unionbankofindia.co.in/en/vehicle-insurance-policy",
+      "Union Bank follows strict anti-money laundering regulations to prevent illegal financial activities. This policy includes Know Your Customer (KYC) norms, transaction monitoring, and reporting obligations.",
+    link: "https://www.unionbankofindia.co.in/en/common/anti-money-laundering",
   },
   {
     id: 5,
-    name: "Travel Insurance Policy",
+    name: "Deposit Policy",
     description:
-      "Enjoy a worry-free journey with our Travel Insurance Policy, covering trip cancellations, medical emergencies, lost baggage, and more.",
-    link: "https://www.unionbankofindia.co.in/en/travel-insurance-policy",
+      "This policy explains the terms, interest rates, and operational guidelines for making deposits with Union Bank. It also covers premature withdrawal rules and nomination facilities.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
   },
   {
     id: 6,
-    name: "Retirement Pension Policy",
+    name: "Compensation Policy",
     description:
-      "Plan for a secure future with our Retirement Pension Policy, ensuring regular income post-retirement to maintain your lifestyle.",
-    link: "https://www.unionbankofindia.co.in/en/retirement-pension-policy",
+      "This policy details the circumstances under which customers are compensated for financial losses due to banking errors, service deficiencies, or system failures.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+  },
+  {
+    id: 7,
+    name: "Customer Rights Policy",
+    description:
+      "Our Customer Rights Policy defines fundamental rights, such as fair treatment, transparency, privacy, and grievance redressal mechanisms, ensuring ethical and responsible banking practices.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
   },
 ];
 
@@ -52,10 +66,18 @@ const AnimatedCard = ({ children }) => {
   const fadeAnim = new Animated.Value(0);
 
   React.useEffect(() => {
-    Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   }, []);
 
-  return <Animated.View style={[styles.card, { opacity: fadeAnim }]}>{children}</Animated.View>;
+  return (
+    <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
+      {children}
+    </Animated.View>
+  );
 };
 
 export default function PolicyScreen() {
@@ -64,7 +86,10 @@ export default function PolicyScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Policies</Text>
@@ -123,8 +148,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
   },
-  policyName: { fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginBottom: 5 },
+  policyName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    marginBottom: 5,
+  },
   policyDescription: { fontSize: 14, color: "#666", marginBottom: 10 },
-  button: { backgroundColor: "#007bff", paddingVertical: 10, borderRadius: 5, alignItems: "center" },
+  button: {
+    backgroundColor: "#007bff",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
   buttonText: { color: "white", fontSize: 16, fontWeight: "bold" },
 });

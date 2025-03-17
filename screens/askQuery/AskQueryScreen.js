@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,9 @@ import { Video } from "expo-av";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/colors";
-import uploadFileToS3 from "../../helper/helper";
+import uploadFileToS3, { ipAddress } from "../../helper/helper";
+import { UserContext } from "../../store/UserContext";
+import axios from "axios";
 
 const AskQueryScreen = () => {
   const navigation = useNavigation();
@@ -24,6 +26,7 @@ const AskQueryScreen = () => {
   const [selectedOption, setSelectedOption] = useState("audio"); // State to toggle between audio and video
   const [recordingDuration, setRecordingDuration] = useState(0);
   const recordingRef = useRef(null);
+  const { userData } = useContext(UserContext);
 
   // Function to toggle audio recording
   const toggleAudioRecording = async () => {
@@ -148,13 +151,26 @@ const AskQueryScreen = () => {
 
     console.log("Uploaded file URL:", fileUrl);
 
+    const response = await axios.post(`http://${ipAddress}:4000/verify`, {
+      user_image: userData.selfieUrl,
+      user_query: fileUrl,
+    });
+
+    console.log(response.data);
+
+    const category = response.data["category"];
+    const matchedName = response.data["matched_name"];
+
     Alert.alert(
-      "Thank You",
-      "Your query has been submitted successfully!",
+      category,
+      matchedName,
       [
         {
           text: "OK",
-          // onPress: () => navigation.navigate("HomeScreen"),
+          onPress: () =>
+            navigation.navigate(`${category}Details`, {
+              category: matchedName,
+            }),
         },
       ],
       { cancelable: false }

@@ -22,7 +22,7 @@ import FAQ from "./screens/faq/FAQ";
 import OtpVerificationScreen from "./screens/auth/signup/OtpVerificationScreen";
 import TrackQueriesScreen from "./screens/profile/TrackQueries";
 import AccountType from "./screens/accounts/AccountType";
-import CustomerServiceScreen from "./screens/home/CustomerServiceScreen";
+import CustomerServiceScreen from "./screens/customerService/CustomerServiceScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,17 +35,25 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignupMobile" component={SignupMobileScreen} />
-          <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
-          <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} />
+          <Stack.Screen
+            name="PersonalDetails"
+            component={PersonalDetailsScreen}
+          />
+          <Stack.Screen
+            name="DocumentUpload"
+            component={DocumentUploadScreen}
+          />
           <Stack.Screen name="MpinSetup" component={MpinSetupScreen} />
-          <Stack.Screen name="OtpVerification" component={OtpVerificationScreen} />
+          <Stack.Screen
+            name="OtpVerification"
+            component={OtpVerificationScreen}
+          />
 
           {/* Profile & Services */}
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="TrackQueries" component={TrackQueriesScreen} />
           <Stack.Screen name="AskQuery" component={AskQueryScreen} />
           <Stack.Screen name="ServiceBot" component={ServiceBotScreen} />
-   
 
           {/* Loan Screens */}
           <Stack.Screen name="Loan" component={LoanScreen} />
@@ -57,11 +65,14 @@ export default function App() {
           <Stack.Screen name="Policies" component={PolicyScreen} />
           <Stack.Screen name="Faq" component={FAQ} />
           <Stack.Screen name="AccountType" component={AccountType} />
-          <Stack.Screen name="CustomerServiceScreen" component={CustomerServiceScreen} />
+          <Stack.Screen
+            name="CustomerServiceScreen"
+            component={CustomerServiceScreen}
+          />
 
           {/* Policy Details */}
           <Stack.Screen
-            name="PolicyDetailsScreen"
+            name="PolicyDetails"
             component={PolicyDetailsScreen}
             options={{ title: "Policy Details", headerShown: true }}
           />
