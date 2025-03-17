@@ -232,6 +232,8 @@ export default function HomeScreen() {
           <Ionicons name="chatbubbles" size={26} color={COLORS.black} />
           <Text style={styles.navText}>Chatbot</Text>
         </TouchableOpacity>
+       
+          
       </View>
     </View>
   );
