@@ -13,6 +13,7 @@ import { Video } from "expo-av";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/colors";
+import uploadFileToS3 from "../../helper/helper";
 
 const AskQueryScreen = () => {
   const navigation = useNavigation();
@@ -30,6 +31,7 @@ const AskQueryScreen = () => {
       // Stop audio recording
       try {
         await recording.stopAndUnloadAsync();
+        console.log(recording.getURI());
         setAudioUri(recording.getURI());
         setRecording(null);
       } catch (err) {
@@ -123,7 +125,7 @@ const AskQueryScreen = () => {
   };
 
   // Function to submit query
-  const submitQuery = () => {
+  const submitQuery = async () => {
     if (!audioUri && !videoUri) {
       Alert.alert(
         "Error",
@@ -132,6 +134,20 @@ const AskQueryScreen = () => {
       return;
     }
 
+    let fileUrl = null;
+    if (selectedOption == "audio") {
+      fileUrl = await uploadFileToS3({ uri: audioUri, name: audioUri });
+    } else if (videoUri) {
+      fileUrl = await uploadFileToS3({ uri: videoUri, name: videoUri });
+    }
+
+    if (!fileUrl) {
+      Alert.alert("Upload Error", "Failed to upload the file.");
+      return;
+    }
+
+    console.log("Uploaded file URL:", fileUrl);
+
     const ticketId = `TICKET-${Date.now()}`;
     Alert.alert(
       "Thank You",
@@ -139,7 +155,7 @@ const AskQueryScreen = () => {
       [
         {
           text: "OK",
-          onPress: () => navigation.navigate("HomeScreen"),
+          // onPress: () => navigation.navigate("HomeScreen"),
         },
       ],
       { cancelable: false }
@@ -361,7 +377,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   submitButton: {
-    backgroundColor: COLORS.success,
+    backgroundColor: "green",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -370,7 +386,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   disabledButton: {
-    backgroundColor: COLORS.gray,
+    backgroundColor: "grey",
   },
   buttonText: {
     fontSize: 14,
