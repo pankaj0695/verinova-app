@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -8,20 +8,28 @@ import {
   Image,
   Animated,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../../../store/UserContext";
 import { COLORS } from "../../../constants/colors";
+import axios from "axios";
 
 export default function OtpVerificationScreen() {
   const navigation = useNavigation();
-  const route = useRoute();
   const [otp, setOtp] = useState("");
+  const { userData } = useContext(UserContext);
   const buttonScale = useRef(new Animated.Value(1)).current;
-  const { confirmation } = route.params;
 
   const verifyOTP = async () => {
     try {
-      await confirmation.confirm(otp);
-      navigation.navigate("PersonalDetails");
+      const response = await axios.post(
+        "http://192.168.220.118:4000/verify-otp",
+        {
+          email: userData.email,
+          otp: +otp,
+        }
+      );
+      if (response.status === 200) navigation.navigate("PersonalDetails");
+      else Alert.alert("Invalid OTP", "Please enter the correct OTP.");
     } catch (error) {
       Alert.alert("Invalid OTP", "Please enter the correct OTP.");
     }

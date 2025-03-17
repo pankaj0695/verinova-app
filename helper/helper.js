@@ -21,7 +21,7 @@ const uploadFileToS3 = async (file) => {
 
     // Step 1: Get pre-signed S3 URL from Flask API
     const s3UrlResponse = await axios.post(
-      "http://192.168.105.118:4000/generate-upload-url",
+      "http://192.168.220.118:4000/generate-upload-url",
       { imgExtension: fileExtension }
     );
 

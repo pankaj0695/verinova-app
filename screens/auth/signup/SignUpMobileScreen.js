@@ -12,10 +12,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../store/UserContext";
 import { COLORS } from "../../../constants/colors";
+import axios from "axios";
 
 export default function SignupMobileScreen() {
   const navigation = useNavigation();
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const buttonScale = useRef(new Animated.Value(1)).current;
   const { setUserData } = useContext(UserContext);
 
@@ -35,8 +37,9 @@ export default function SignupMobileScreen() {
       );
       return;
     }
-    setUserData({ mobile });
-    navigation.navigate("PersonalDetails");
+    setUserData({ email, mobile });
+    await axios.post("http://192.168.220.118:4000/generate-otp", { email });
+    navigation.navigate("OtpVerification");
   };
 
   return (
@@ -57,6 +60,16 @@ export default function SignupMobileScreen() {
           onChangeText={(text) => setMobile(text.replace(/[^0-9]/g, ""))} // Allow only numbers
           keyboardType="numeric"
           maxLength={10} // Restrict input to 10 digits
+        />
+
+        <Text style={styles.label}>Enter Your Email</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)} // Allow only numbers
+          keyboardType="email"
         />
 
         <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
