@@ -7,7 +7,7 @@ const uriToBlob = async (uri) => {
   return blob;
 };
 
-export const ipAddress = "192.168.137.78";
+export const ipAddress = "192.168.137.155";
 
 // Function to Upload File to AWS S3
 const uploadFileToS3 = async (file) => {

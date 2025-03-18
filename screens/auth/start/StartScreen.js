@@ -110,7 +110,9 @@ export default function StartScreen() {
 
     if (
       !hasHardware ||
-      !supported.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)
+      !supported.includes(
+        LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
+      )
     ) {
       Alert.alert(
         "Error",
@@ -130,6 +132,9 @@ export default function StartScreen() {
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: "Authenticate with Face ID",
       fallbackLabel: "Use MPIN",
+      disableDeviceFallback: true, // Ensure only facial recognition is used
+      authenticationType:
+        LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION, // Explicitly specify facial recognition
     });
 
     if (result.success) {
@@ -196,7 +201,10 @@ export default function StartScreen() {
           <Text style={styles.authText}>Use Fingerprint</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleFaceAuthLogin} style={styles.authButton}>
+        <TouchableOpacity
+          onPress={handleFaceAuthLogin}
+          style={styles.authButton}
+        >
           <Image
             source={require("../../../assets/images/face-recognition.jpg")}
             style={styles.authIcon}
@@ -275,5 +283,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#007bff",
   },
+  loadingText: {
+    fontSize: 18,
+  },
 });
-

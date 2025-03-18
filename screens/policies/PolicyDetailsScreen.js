@@ -1,20 +1,81 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons"; // Import for icons
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  Alert,
+} from "react-native";
+
+const policies = [
+  {
+    id: 1,
+    name: "Privacy Policy",
+    description:
+      "This policy outlines how we collect, use, store, and protect your personal information. It covers data security, sharing of information, and your rights regarding data privacy.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+  },
+  {
+    id: 2,
+    name: "Grievance Redressal Policy",
+    description:
+      "Our Grievance Redressal Policy provides a framework to address customer complaints and service-related issues. It details response timelines, escalation levels, and resolution processes.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal", // Updated link
+  },
+  {
+    id: 3,
+    name: "Terms and Conditions for Internet Banking",
+    description:
+      "Learn about the terms, conditions, and security measures for using Union Bank's internet banking services, including login credentials, transaction limits, and fraud prevention guidelines.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+  },
+  {
+    id: 4,
+    name: "Anti-Money Laundering Policy",
+    description:
+      "Union Bank follows strict anti-money laundering regulations to prevent illegal financial activities. This policy includes Know Your Customer (KYC) norms, transaction monitoring, and reporting obligations.",
+    link: "https://www.unionbankofindia.co.in/en/common/anti-money-laundering",
+  },
+  {
+    id: 5,
+    name: "Deposit Policy",
+    description:
+      "This policy explains the terms, interest rates, and operational guidelines for making deposits with Union Bank. It also covers premature withdrawal rules and nomination facilities.",
+    link: "https://www.unionbankofindia.co.in/en/common/grievance-redressal",
+  },
+  {
+    id: 6,
+    name: "Compensation Policy",
+    description:
+      "This policy details the circumstances under which customers are compensated for financial losses due to banking errors, service deficiencies, or system failures.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+  },
+  {
+    id: 7,
+    name: "Customer Rights Policy",
+    description:
+      "Our Customer Rights Policy defines fundamental rights, such as fair treatment, transparency, privacy, and grievance redressal mechanisms, ensuring ethical and responsible banking practices.",
+    link: "https://www.unionbankofindia.co.in/en/common/policies-and-disclosures",
+  },
+];
 
 export default function PolicyDetailsScreen({ route }) {
-  const navigation = useNavigation();0.
-  const { name, description, link } = route.params; // Extracting necessary params
+  const [policy, setPolicy] = useState({});
+  const { name } = route.params; // Extracting necessary params
+  useEffect(() => {
+    const currPolicy = policies.find((policy) => (policy.name = name));
+    setPolicy(currPolicy);
+  });
 
   const openLink = async () => {
-    if (!link) {
+    if (!policy.link) {
       Alert.alert("Error", "No policy link available.");
       return;
     }
-    const supported = await Linking.canOpenURL(link);
+    const supported = await Linking.canOpenURL(policy.link);
     if (supported) {
-      await Linking.openURL(link);
+      await Linking.openURL(policy.link);
     } else {
       Alert.alert("Error", "Failed to open the policy page.");
     }
@@ -35,8 +96,8 @@ export default function PolicyDetailsScreen({ route }) {
     <View style={styles.container}>
       {/* Policy Card */}
       <View style={styles.card}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.title}>{policy.name}</Text>
+        <Text style={styles.description}>{policy.description}</Text>
       </View>
 
       {/* Action Buttons */}
@@ -52,7 +113,12 @@ export default function PolicyDetailsScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#f4f4f4", alignItems: "center" },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f4f4f4",
+    alignItems: "center",
+  },
 
   /* Card Styles */
   card: {
@@ -68,7 +134,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  title: { fontSize: 22, fontWeight: "bold", color: "#333", marginBottom: 10, textAlign: "center" },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 10,
+    textAlign: "center",
+  },
   description: { fontSize: 16, color: "#555", textAlign: "center" },
 
   /* Button Styles */

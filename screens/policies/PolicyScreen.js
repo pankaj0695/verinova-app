@@ -102,10 +102,8 @@ export default function PolicyScreen() {
             <TouchableOpacity
               style={styles.button}
               onPress={() =>
-                navigation.navigate("PolicyDetailsScreen", {
+                navigation.navigate("PolicyDetails", {
                   name: policy.name,
-                  description: policy.description,
-                  link: policy.link,
                 })
               }
             >

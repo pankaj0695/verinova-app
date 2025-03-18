@@ -14,7 +14,6 @@ import AskQueryScreen from "./screens/askQuery/AskQueryScreen";
 import ServiceBotScreen from "./screens/servicebot/ServiceBotScreen";
 import LoanScreen from "./screens/loan/LoanScreen";
 import LoanDetailsScreen from "./screens/loan/LoanDetailsScreen";
-import LoanCategoryScreen from "./screens/loan/LoanCategoryScreen";
 import WithdrawalScreen from "./screens/withdrawal/WithdrawalScreen";
 import PolicyScreen from "./screens/policies/PolicyScreen";
 import PolicyDetailsScreen from "./screens/policies/PolicyDetailsScreen";
@@ -58,7 +57,6 @@ export default function App() {
           {/* Loan Screens */}
           <Stack.Screen name="Loan" component={LoanScreen} />
           <Stack.Screen name="LoanDetails" component={LoanDetailsScreen} />
-          <Stack.Screen name="LoanCategory" component={LoanCategoryScreen} />
           <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
 
           {/* Policies & FAQs */}
