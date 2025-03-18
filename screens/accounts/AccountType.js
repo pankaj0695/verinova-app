@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
     padding: 20
   },
   scrollContainer: {
-    paddingBottom: 20
+    paddingBottom: 20,
+    justifyContent: "center"
   },
   topBar: {
     flexDirection: "row",

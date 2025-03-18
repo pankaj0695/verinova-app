@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -7,98 +7,96 @@ import {
   Animated,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
+const loanOptions = [
+  {
+    id: 1,
+    type: "Home Loan",
+    description: "Finance your dream home with flexible repayment options.",
+    features: ["Low interest rates", "Flexible tenure up to 30 years", "Tax benefits on principal and interest"],
+    requirements: ["Identity proof", "Address proof", "Income proof", "Property documents"],
+    image: require("../../assets/images/homeloan.png"),
+  },
+  {
+    id: 2,
+    type: "Personal Loan",
+    description: "Quick and easy loans for your personal needs.",
+    features: ["No collateral required", "Quick disbursal", "Flexible repayment options"],
+    requirements: ["Identity proof", "Address proof", "Income proof", "Bank statements"],
+    image: require("../../assets/images/personalloan.png"),
+  },
+  {
+    id: 3,
+    type: "Car Loan",
+    description: "Drive your dream car with our affordable car loans.",
+    features: ["Low interest rates", "Flexible repayment tenure", "Quick processing"],
+    requirements: ["Identity proof", "Address proof", "Income proof", "Car quotation"],
+    image: require("../../assets/images/carloan.png"),
+  },
+  {
+    id: 4,
+    type: "Education Loan",
+    description: "Invest in your future with our education loans.",
+    features: ["Covers tuition and living expenses", "Flexible repayment options", "Low interest rates"],
+    requirements: ["Identity proof", "Address proof", "Admission letter", "Income proof of co-borrower"],
+    image: require("../../assets/images/educationloan.png"),
+  },
+];
+
+
+
+
 export default function LoanDetailsScreen() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { loanName } = route.params;
+  const [loan, setLoan] = useState({});
+  const { name } = route.params;
   const buttonScale = useRef(new Animated.Value(1)).current;
 
+  useEffect(() => {
+    const selectedLoan = loanOptions.find((item) => item.type == name);
+    if (!selectedLoan) {
+      Alert.alert("Error", "Loan type not found.", [
+        { text: "OK", onPress: () => navigation.goBack() },
+      ]);
+    }
+    console.log(selectedLoan);
+    setLoan(selectedLoan);
+  }, [name]);
+
+  if (!loan) return null;
+
   const animatePressIn = () =>
-    Animated.spring(buttonScale, {
-      toValue: 0.9,
-      useNativeDriver: true,
-    }).start();
+    Animated.spring(buttonScale, { toValue: 0.9, useNativeDriver: true }).start();
+
   const animatePressOut = () =>
     Animated.spring(buttonScale, { toValue: 1, useNativeDriver: true }).start();
 
-  const loanDetails = {
-    "Regular Home Loan": {
-      description: "A standard home loan for purchasing a house.",
-      documents: [
-        "Identity Proof",
-        "Address Proof",
-        "Salary Slip",
-        "Property Documents",
-      ],
-    },
-    "NRI Home Loan": {
-      description: "Specialized home loan for Non-Resident Indians.",
-      documents: [
-        "Passport",
-        "Visa Copy",
-        "NRI Bank Account Statement",
-        "Income Proof",
-      ],
-    },
-    "New Car Loan": {
-      description: "Loan for purchasing a brand-new car.",
-      documents: [
-        "Identity Proof",
-        "Address Proof",
-        "Salary Slip",
-        "Car Invoice",
-      ],
-    },
-    "Used Car Loan": {
-      description: "Loan for purchasing a used or second-hand car.",
-      documents: ["Identity Proof", "Address Proof", "Salary Slip", "RC Book"],
-    },
-    "Salary Loan": {
-      description: "Instant loan for salaried individuals.",
-      documents: ["Salary Slip", "Bank Statement", "ID Proof"],
-    },
-    "Medical Loan": {
-      description: "Loan for medical emergencies and treatments.",
-      documents: ["Doctor's Prescription", "Medical Bill", "Identity Proof"],
-    },
-  };
-
   return (
     <View style={styles.container}>
-      {/* Navbar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
-        <Text style={styles.topBarTitle}>{loanName}</Text>
+        <Text style={styles.topBarTitle}>{loan.type}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Loan Image */}
-        <Image
-          source={require("../../assets/images/loan-bg.jpg")}
-          style={styles.banner}
-        />
-
-        {/* Loan Description */}
-        <Text style={styles.description}>{loanDetails[loanName]?.description}</Text>
-
-        {/* Required Documents */}
+        <Image source={require("../../assets/images/loan-bg.jpg")} style={styles.banner} />
+        <Text style={styles.description}>{loan.description}</Text>
         <View style={styles.documentsContainer}>
           <Text style={styles.sectionTitle}>Required Documents</Text>
-          {loanDetails[loanName]?.documents.map((doc, index) => (
+          {loan && loan.requirements && loan.requirements.map((doc, index) => (
             <View key={index} style={styles.documentItem}>
               <Ionicons name="document-text-outline" size={20} color="#007bff" />
               <Text style={styles.document}>{doc}</Text>
             </View>
           ))}
         </View>
-
-        {/* Apply Now Button */}
         <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
           <TouchableOpacity
             style={styles.applyButton}
@@ -116,8 +114,6 @@ export default function LoanDetailsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f8f8f8" },
   scrollContainer: { alignItems: "center", paddingBottom: 20 },
-
-  /* Navbar - Matches previous screens */
   topBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -129,36 +125,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     elevation: 2,
   },
-  backButton: {
-    position: "absolute",
-    left: 16,
-    paddingTop: 30, // Ensures consistency with other screens
-  },
-  topBarTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    paddingTop: 30, // Ensures text alignment with other screens
-    color: "black",
-  },
-
-  /* Banner Image */
-  banner: {
-    width: "90%",
-    height: 180,
-    borderRadius: 12,
-    marginVertical: 15,
-  },
-
-  /* Loan Details */
-  description: {
-    fontSize: 16,
-    color: "#555",
-    marginBottom: 20,
-    textAlign: "center",
-    width: "90%",
-  },
-
-  /* Documents Section */
+  backButton: { position: "absolute", left: 16, paddingTop: 30 },
+  topBarTitle: { fontSize: 22, fontWeight: "bold", paddingTop: 30, color: "black" },
+  banner: { width: "90%", height: 180, borderRadius: 12, marginVertical: 15 },
+  description: { fontSize: 16, color: "#555", marginBottom: 20, textAlign: "center", width: "90%" },
   documentsContainer: {
     width: "90%",
     backgroundColor: "#fff",
@@ -170,24 +140,9 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#333",
-  },
-  documentItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  document: {
-    fontSize: 16,
-    color: "#444",
-    marginLeft: 8,
-  },
-
-  /* Apply Now Button */
+  sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 10, color: "#333" },
+  documentItem: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
+  document: { fontSize: 16, color: "#444", marginLeft: 8 },
   applyButton: {
     backgroundColor: "#E2261C",
     padding: 15,
