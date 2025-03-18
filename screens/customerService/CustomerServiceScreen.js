@@ -62,7 +62,6 @@ const CustomerServiceScreen = () => {
       return;
     }
 
-    // Log the form data
     const formData = {
       category,
       subCategory,
@@ -88,20 +87,18 @@ const CustomerServiceScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Top Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.topBarTitle}>Customer Service</Text>
         <View style={{ width: 28 }}>
-          <Text> </Text> {/* Placeholder for alignment */}
+          <Text> </Text>
         </View>
       </View>
 
       <Text style={styles.subtitle}>Submit your query below:</Text>
 
-      {/* Category Dropdown */}
       <Text style={styles.label}>Category</Text>
       <View style={{ zIndex: openCategory ? 2 : 1 }}>
         <DropDownPicker
@@ -113,11 +110,10 @@ const CustomerServiceScreen = () => {
           placeholder="Select a category"
           style={styles.dropdown}
           dropDownContainerStyle={styles.dropdownContainer}
-          onChangeValue={() => setSubCategory(null)} // Reset subcategory when category changes
+          onChangeValue={() => setSubCategory(null)}
         />
       </View>
 
-      {/* Subcategory Dropdown */}
       {category && (
         <>
           <Text style={styles.label}>Subcategory</Text>
@@ -131,13 +127,12 @@ const CustomerServiceScreen = () => {
               placeholder="Select a subcategory"
               style={styles.dropdown}
               dropDownContainerStyle={styles.dropdownContainer}
-              onChangeValue={(value) => setSubCategory(value)} // Ensure subCategory is updated
+              onChangeValue={(value) => setSubCategory(value)}
             />
           </View>
         </>
       )}
 
-      {/* Details Input */}
       <Text style={styles.label}>Query</Text>
       <TextInput
         style={[styles.input, styles.detailsInput]}
@@ -147,7 +142,6 @@ const CustomerServiceScreen = () => {
         multiline
       />
 
-      {/* Submit Button */}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
