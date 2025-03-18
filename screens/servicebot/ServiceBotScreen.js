@@ -9,12 +9,14 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { ipAddress } from "../../helper/helper";
+import Markdown from "react-native-markdown-display";
 
 export default function ServiceBotScreen() {
   const navigation = useNavigation();
-  
+
   const [messages, setMessages] = useState([
-    { id: "1", text: "Hi, I am Vyom’s AI service Bot", sender: "bot" },
+    { id: "1", text: "Hi, I am Vyom’s AI Service Bot", sender: "bot" },
     {
       id: "2",
       text: "Please describe how I can help you...",
@@ -22,33 +24,60 @@ export default function ServiceBotScreen() {
     },
   ]);
   const [inputText, setInputText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputText.trim() === "") return;
 
-    const newMessage = {
+    const userMessage = {
       id: Math.random().toString(),
       text: inputText,
       sender: "user",
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInputText("");
+    setLoading(true);
+
+    try {
+      const response = await fetch(`http://${ipAddress}:4000/chatbot`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: inputText }),
+      });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (response.ok) {
+        const botMessage = {
+          id: Math.random().toString(),
+          text: data.response,
+          sender: "bot",
+        };
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      } else {
+        alert("Bot error: " + data.error);
+      }
+    } catch (error) {
+      setLoading(false);
+      alert("Network error. Check server connection.");
+    }
   };
 
   return (
     <View style={styles.container}>
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        {/* Back Button on Left */}
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-
-        {/* Chatbot Title in Center */}
         <Text style={styles.topBarText}>Chatbot</Text>
-        
-        {/* Empty View to Keep Title Centered */}
         <View style={{ width: 24 }} />
       </View>
 
@@ -64,7 +93,11 @@ export default function ServiceBotScreen() {
               item.sender === "user" ? styles.userMessage : styles.botMessage,
             ]}
           >
-            <Text style={styles.messageText}>{item.text}</Text>
+            {item.sender === "bot" ? (
+              <Markdown style={styles.markdownText}>{item.text}</Markdown> // Render Markdown properly
+            ) : (
+              <Text style={styles.messageText}>{item.text}</Text>
+            )}
           </View>
         )}
       />
@@ -81,6 +114,9 @@ export default function ServiceBotScreen() {
           <Ionicons name="send" size={20} color="black" />
         </TouchableOpacity>
       </View>
+
+      {/* Loading Indicator */}
+      {loading && <Text style={styles.loadingText}>Bot is typing...</Text>}
 
       {/* Ask Query Button */}
       <TouchableOpacity
@@ -178,4 +214,3 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 });
-
